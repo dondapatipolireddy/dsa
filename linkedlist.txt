@@ -1,0 +1,223 @@
+linkedlist:
+___________________________________________
+when you are solving linked list remember 
+
+testcases:
+	1.one element availble
+	2.zero element availble
+	
+when you are removing or deleting:
+	write code:
+		intital element deletion
+		middle element deletion
+		last element deletion
+----------------------------------------------------------
+and in alford algoithem:
+    After finding cycle when first==second:
+	after when you started first =head again  and second==first when it done you find the starting point v
+
+	class Solution:
+    def detectCycle(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if head==None:
+            return False
+        first=second=head
+        while second and second.next:
+            first=first.next
+            second=second.next.next
+            if first==second:
+                first=head
+                while first!=second:
+                    first=first.next
+                    second=second.next
+                else:
+                    return first
+        return None
+-----------------------------------------------------------------
+based on that write code
+---------------------------------------------------------------
+ Intersection of Two Linked Lists:
+
+rick: Switch Heads
+
+When pointer A reaches the end, send it to headB.
+
+When pointer B reaches the end, send it to headA.
+
+Now A travels:
+
+(a + c) + b
+
+and B travels:
+
+(b + c) + a
+
+Both distances are equal:
+
+a + b + c
+
+So after the same number of steps, they must meet.
+
+
+class Solution:
+    def getIntersectionNode(self, headA, headB):
+        if not headA or not headB:
+            return None
+
+        pA, pB = headA, headB
+
+        while pA != pB:
+            pA = pA.next if pA else headB
+            pB = pB.next if pB else headA
+
+        return pA
+
+-------------------------------------------------------------------
+19
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        slow=None
+        tem=slow
+        temp=head
+        for i in range(n):
+            temp=temp.next
+        if temp==None:
+            return head.next
+        slow=head
+        tem=head
+        while temp.next:                  #very very important
+            temp=temp.next
+            tem=tem.next
+        tem.next=tem.next.next
+        return slow
+________________________________________________________________________________
+
+swapping two pairs:
+# Definition for singly-linked list.
+class Node:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+class Solution:
+    def swapPairs(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        temp=head
+        tem=Node(-1)
+        dummy=None
+        t=head
+        if not head:
+            return None
+        if head.next:
+            t=head.next
+        while temp and temp.next:
+            dummy=temp.next.next
+            temp.next.next=temp
+            tem.next=temp.next
+            temp.next=dummy
+            tem=temp
+            temp=temp.next
+        return t
+___________________________________________________________________________________________
+merge two linked lsit:
+
+	new=None
+        tail=None
+        first=head
+        while first and second:
+            fnext=first.next      #  important
+            snext=second.next    # imporatant preserve then next node address because when you change assign    
+            if not new:          #  second to tail then first node loss next address that's why we done these
+                new=first
+                tail=new
+                tail.next=second
+                tail=tail.next
+            else:
+                tail.next=first
+                tail=tail.next
+                tail.next=second
+                tail=tail.next
+            first=fnext
+            second=snext
+        if first:
+            tail.next=first
+        if second:
+            tail.next=second
+        return new
+
+_____________________________________________________________________________________________________________________
+reorderlist:143
+
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def reorderList(self, head: Optional[ListNode]) -> None:
+        fast=head
+        slow=head
+        n=None
+        if not head:
+            return
+        if not head.next:
+            return head
+        while fast and fast.next:
+            fast=fast.next.next
+            n=slow
+            slow=slow.next
+        n.next=None
+        def reve(slow):
+            tem=None
+            temp=slow
+            while temp:
+                tempp=temp.next
+                temp.next=tem
+                tem=temp
+                temp=tempp
+            return tem
+        second=reve(slow)
+        new=None
+        tail=None
+        first=head
+        while first and second:
+            fnext=first.next      #  important
+            snext=second.next    # imporatant preserve then next node address because when you change assign    
+            if not new:          #  second to tail then first node loss next address that's why we done these
+                new=first
+                tail=new
+                tail.next=second
+                tail=tail.next
+            else:
+                tail.next=first
+                tail=tail.next
+                tail.next=second
+                tail=tail.next
+            first=fnext
+            second=snext
+        if first:
+            tail.next=first
+        if second:
+            tail.next=second
+        return new
+___________________________________________________________________________________________________________________________________
+1721. Swapping Nodes in a Linked List  ********************************improta**************************************  
+
+FOR FINDING NTH NODE:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+class Solution:
+    def swapNodes(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        fast=head
+        if not head:
+            return
+        for i in range(k-1):
+            fast=fast.next
+        slow=head
+        temp=fast
+        temp=temp.next
+        while temp:
+            slow=slow.next
+            temp=temp.next
+        slow.val,fast.val=fast.val,slow.val
+        return head

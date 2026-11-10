@@ -1,0 +1,344 @@
+BINARY TREE:https://chatgpt.com/c/6a6ae062-7e98-83ee-899e-004ac9d6e0ab
+_____________________________________
+1.flattend
+2.lowest common ancestor
+	In problem:
+		1.finding value what your return
+		2.navigate to each node
+		3.what you return when satisy or not satisfy like that
+class Solution:
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        def new(root):
+            if not root:                             #1
+                return
+            if root==p or root==q:		     #1
+                return root			     #1
+            ll=new(root.left)			     #2
+            rr=new(root.right)			     #2
+            if ll and rr:			     #3
+                return root			     ''
+            if ll:
+                return ll			     ''
+            if rr:				     ''
+                return rr
+            return None				     #3
+        return new(root)
+            s
+
+
+
+_____________________________________________________________________________________________
+*********Important pattern for when you want compare value at each left and right branch****
+class Solution:
+    def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+        max_=0
+        def latest(root):
+            nonlocal max_
+            if not root:
+                return 0
+            a=latest(root.left)                     1
+            b=latest(root.right)                    2
+            max_=max(max_,a+b)                      3
+            return 1+max(a,b)			    4
+        latest(root)
+	return max_
+
+
+
+
+******************model
+class Solution:
+    def pathSum(self, root: Optional[TreeNode], targetSum: int) -> List[List[int]]:
+        a=[]
+        def latest(root,pat):
+            if not root:
+                return
+            if not root.left and not root.right:
+                if targetSum==sum(pat):
+                    a.append(pat.copy())
+                return
+            if root.left:
+                pat.append(root.left.val)
+                latest(root.left,pat)
+                pat.pop()
+            if root.right:
+                pat.append(root.right.val)
+                latest(root.right,pat)
+                pat.pop()
+        latest(root,[root.val])
+        return a
+-----------------------------------------------------------------------------------
+
+_______________________________________________________________________________________
+
+from collections import deque
+class Node:
+    def __init__(self,val):
+        self.val=val
+        self.left=None
+        self.right=None
+class BT:
+    def trans(self,root):
+        if not root:
+            return 
+        
+        print(root.val)
+        self.trans(root.left)
+        self.trans(root.right)
+    def tree(self,root,node):
+        if not root:
+            return node
+        q=deque([root])
+        while q:
+            temp=q.popleft()
+            if not temp.left:
+                temp.left=node
+                return root
+            else:
+                q.append(temp.left)
+            
+            if not temp.right:
+                temp.right=node
+                return root
+            else:
+                q.append(temp.right)
+            
+    def exec(self):
+        a=[1,2,3,4,5]
+        root=None
+        for i in a:
+            root=self.tree(root,Node(i))
+        return root
+obj=BT()
+obj.trans(obj.exec())
+____________________________________________
+from collections import deque
+class Node:
+    def __init__(self,val):
+        self.val=val
+        self.left=None
+        self.right=None
+class BT:
+    def trans(self,root):
+        if not root:
+            return 
+        
+        print(root.val)
+        self.trans(root.left)
+        self.trans(root.right)
+    def tree(self,root,node):
+        if not root:
+            return node
+        if root.val>node.val:
+            root.left=self.tree(root.left,node)
+        if root.val<node.val:
+            root.right=self.tree(root.right,node)
+        return root        #important
+    def exec(self):
+        a=[1,2,3,4,5]
+        root=None
+        for i in a:
+            root=self.tree(root,Node(i))
+        return root
+obj=BT()
+-------------------------------------------------------------------
+
+bst:
+_______________
+530
+
+bfs: (breath first search) level order transversal
+______________
+levalOrder
+bottom to top
+top to bottom
+zig zig
+rightside view
+__________________________________________________________________________________________________________________________
+102. Binary Tree Level Order Traversal
+class Solution:
+    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        result=[]
+        if not root:
+            return result
+        d=deque([root])
+        while d:
+            local=[]
+            size=len(d)
+            for i in range(size):
+                node=d.popleft()
+                local.append(node.val)
+                if node.left:
+                    d.append(node.left)
+                if node.right:
+                    d.append(node.right)
+            result.append(local)
+        return result
+_______________________________________________________________________________________________________________________
+zigzagTranversal:
+_______________________________
+class Solution:
+    def zigzagLevelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        result=[]
+        if not root:
+            return result
+        d=deque([root])
+        n=0
+        while d:
+            level=[]
+            size=len(d)
+            for i in range(size):
+                node=d.popleft()
+                level.append(node.val)
+                if node.left:
+                    d.append(node.left)
+                if node.right:
+                    d.append(node.right)
+            if n%2==0:
+                result.append(level)
+            else:
+                result.append(level[::-1])
+            n+=1
+        return result
+____________________________________________________________________________________________________________
+
+class Solution:
+    def binaryTreePaths(self, root: Optional[TreeNode]) -> List[str]:
+        stack=[]
+        def Tree(root,path):
+            if not root:
+                stack.append(path)
+                return
+            
+            if not root.left and not root.right:       ***************************#important**********************************
+                stack.append(path)
+                return
+            
+            if root.left:
+                temp=path+("->"+str(root.left.val))
+                Tree(root.left,temp)
+            
+            if root.right:
+                temp=path+("->"+str(root.right.val))
+                Tree(root.right,temp)
+        Tree(root,str(root.val))
+        return stack
+___________________________________________________________________________
+
+from collections import deque
+
+arr=[1,2,3,4,5]
+class Node:
+    def __init__(self,val):                          #important
+        self.val=val
+        self.left=None
+        self.right=None
+def bt(arr):
+    if not arr:
+        return None
+    root=Node(arr[0])
+    d=deque([root])
+    i=1
+    while q and i<len(arr):
+        node=q.popleft()
+        
+        if arr[i] and i<len(arr):
+            node.left=Node(arr[i])
+            q.append(node.left)
+        i+=1
+        
+        if arr[i] and i<len(arr):
+            node.right=Node(arr[i])
+            q.append(node.right)
+        i+=1
+    return root
+____________________________________________________________________________________________
+FLATTEND BINARY TREE:
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def flatten(self, root: Optional[TreeNode]) -> None:
+        def link(root):
+            if not root:
+                return None
+            left=root.left
+            right=root.right
+            lt=link(left)
+            rt=link(right)
+            if left:
+                root.right=left
+                root.left=None
+                lt.right=right
+            if rt:
+                return rt
+            if lt:
+                return lt
+            return root
+        link(root)
+____________________________________________________________________________________________
+DELETE NODE BINARYSEARCH TREE:
+
+class Solution:
+    def search(self, root, key):
+        if root.val == key:
+            return root
+
+        if root.val > key:
+            return self.search(root.left, key)
+
+        return self.search(root.right, key)
+
+    def deleteNode(self, root: Optional[TreeNode], key: int) -> Optional[TreeNode]:
+
+        if not root:
+            return None
+
+        rt = self.search(root, key)
+
+        # No child
+        if not rt.left and not rt.right:
+            return None
+
+        # Only right child
+        if not rt.left:
+            return rt.right
+
+        # Only left child
+        if not rt.right:
+            return rt.left
+
+        # Both children
+        temp = rt.right
+
+        while temp.left:
+            temp = temp.left
+
+        rt.val = temp.val
+
+        rt.right = self.deleteNode(rt.right, temp.val)
+
+        return root
+____________________________________________________________________________________________
+problem no: 98
+class Solution:
+    def isValidBST(self, root: TreeNode | None) -> bool:
+        if not root:
+            return True
+
+        if root.right and root.val >= root.right.val:
+            return False
+
+        if root.left and root.val <= root.left.val:
+            return False
+
+        rr = self.isValidBST(root.right)
+        ll = self.isValidBST(root.left)
+
+        return ll and rr
+____________________________________________________________________________________________
+

@@ -1,0 +1,205 @@
+strings solving :
+
+1.check for empty string:
+	if not s:
+		return s
+2.require to remove WHITE SPACES OR NOT:
+	USING STRIP()
+__________________________________________________________________________________________________
+TWO POINTERS:
+	1.CHECK FOR LEFT>=0 AND RIGHT<=TOTAL-1 
+	2.SOMETIMES LEFT<RIGHT OR LEFT<=RIGHT IS PROPERLY DONE OR NOT
+MYSOLUTION:
+	class Solution:
+    def reverseVowels(self, s: str) -> str:
+        k=s
+        s=s.strip()
+        if len(s)<1:
+            return k
+        s=list(k)
+        vowels="aeiouAEIOU"
+        left=0
+        right=len(s)-1
+        
+        while left<right:                    #   important
+            if s[left] not in vowels:
+                if left+1<len(s):
+                    left+=1
+            if s[right] not in vowels:
+                right-=1
+
+            if s[left] in vowels and s[right] in vowels:
+                s[left],s[right]=s[right],s[left]
+                if left+1<len(s):
+                    left+=1
+                if right-1>=0:
+                    right-=1
+        return "".join(s)
+--------------------------------------------------------------------
+
+left, right = 0, len(s)-1
+
+while left < right:
+
+    while left < right and s[left] not in vowels:
+        left += 1
+
+    while left < right and s[right] not in vowels:
+        right -= 1
+
+    s[left], s[right] = s[right], s[left]
+
+    left += 1
+    right -= 1
+____________________________________________________________________________________________________________________________________
+LONGEST REPEATING CHARACTER REPLACEMENT: (WHEN ANY CHARACTER REPLACE)
+
+class Solution:
+    def characterReplacement(self, s: str, k: int) -> int:
+        dic_=dict()
+        left=0
+        max_freq=0
+        max_str=0
+
+        for right in range(len(s)):
+            dic_[s[right]]=dic_.get(s[right],0)+1
+            if max_freq<dic_[s[right]]:
+                max_freq=dic_[s[right]]
+            while (right-left+1)-max_freq>k:
+                dic_[s[left]]-=1
+                left+=1
+            max_str=max(max_str,(right-left+1))
+        return max_str
+
+HERE SPECIFIC ONE OR ZERO MENTION IN THAT TIME ONLY
+_______________________________________________________________________________________________________________________________________
+MAXIMUM CONSICUTIVE ONES 111
+------------------------------------
+class Solution:
+    def longestOnes(self, nums: List[int], k: int) -> int:
+        dic=dict()
+        left=0
+        max_freq=0
+        result=0
+        for right in range(len(nums)):
+            dic[nums[right]]=dic.get(nums[right],0)+1
+            if 1 in dic:
+                if max_freq<dic[1]:
+                    max_freq=dic[1]
+            if 0 in dic:
+                while dic[0]>k:
+                    dic[nums[left]]-=1
+                    left+=1
+            result=max(result,right-left+1)
+
+class Solution:
+    def longestOnes(self, nums: list[int], k: int) -> int:
+        left=0
+        max_=0
+        count=0
+        for right in range(len(nums)):
+            if nums[right]==0:
+                count+=1
+            while count>k:
+                if nums[left]==0:
+                    count-=1
+                left+=1
+            max_=max(max_,right-left+1)
+        return max_
+________________________________________________________________________________________________________________________
+Minimum Window Substring:
+_______________________________________
+
+A:[latest useful A positions]       #defaultdict(deque) visualiztion
+B:[latest useful B positions]
+C:[latest useful C positions]
+
+
+from collections import deque,defaultdict,Counter
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        dic=defaultdict(deque)
+        dt=Counter(t)
+        total_length=float('inf')
+        start_length=-1
+        for right,ch in enumerate(s):
+
+            if s[right] not in t:
+                continue
+
+            dic[s[right]].append(right)
+            valid=True    
+
+            while len(dic[ch])>dt[ch]:            #update dict to new positions of t characters
+                dic[ch].popleft()
+     
+            for ch in t:
+                if len(dic[ch])<dt[ch]:
+                    valid=False
+                    break
+            if valid:
+                left=min(dic[ch][0] for ch in t)
+                print(left)
+                if (right-left+1)<total_length:
+                    total_length=(right-left+1)
+                    start_length=left
+                    
+        if start_length==-1:
+            return ""
+        return s[start_length:start_length+total_length]
+______________________________________________________________________________________________________________________________
+
+VALID IP ADDRESS:
+-----------------------------------------------------------------
+class Solution:
+    def validIPAddress(self, queryIP: str) -> str:
+
+        # IPv4
+        if queryIP.count(".") == 3:
+            parts = queryIP.split(".")
+
+            if len(parts) != 4:
+                return "Neither"
+
+            for part in parts:
+
+                # Empty part
+                if not part:
+                    return "Neither"
+
+                # Not digits
+                if not part.isdigit():
+                    return "Neither"
+
+                # Leading zeros
+                if len(part) > 1 and part[0] == '0':
+                    return "Neither"
+
+                # Range check
+                if not (0 <= int(part) <= 255):
+                    return "Neither"
+
+            return "IPv4"
+
+        # IPv6
+        if queryIP.count(":") == 7:
+            parts = queryIP.split(":")
+            hexdigits = "0123456789abcdefABCDEF"
+
+            if len(parts) != 8:
+                return "Neither"
+
+            for part in parts:
+
+                # Length check
+                if not (1 <= len(part) <= 4):
+                    return "Neither"
+
+                # Hexadecimal check
+                for ch in part:
+                    if ch not in hexdigits:
+                        return "Neither"
+
+            return "IPv6"
+
+        return "Neither"

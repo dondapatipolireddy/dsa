@@ -1,0 +1,451 @@
+22. Risk Severity Multi-Pointer Sort (0, 1, 2 Dutch Flag Variant)
+Problem: Unpack and sort an array consisting strictly of risk metrics 0, 1, and 2 in a strict single-pass O(N)
+configuration without utilizing sort functions.
+
+n = int(input())
+arr = [int(input()) for _ in range(n)]
+low, mid, high = 0, 0, n - 1
+while mid <= high:
+if arr[mid] == 0:
+arr[low], arr[mid] = arr[mid], arr[low]
+low, mid = low + 1, mid + 1
+elif arr[mid] == 1:
+mid += 1
+else:
+arr[mid], arr[high] = arr[high], arr[mid]
+high -= 1
+print(*arr)
+--------------------------------------------------------------------
+3. Odd Sum Subarrays
+Problem: Count the number of continuous contiguous subarrays that sum up to an odd integer.
+N = int(input())
+
+arr = list(map(int, input().split()))
+odd_c, even_c, res, pref = 0, 1, 0, 0
+for num in arr:
+pref += num
+if pref % 2 == 0:
+res += odd_c
+even_c += 1
+else:
+res += even_c
+odd_c += 1
+print(res)
+----------------------------------------------------------------------
+
+12. Unusual Token Pairs (Absolute Difference K)
+Problem: Count unique pairs of tracking elements (A, B) whose exact absolute arithmetic difference matches
+the constraint value K.
+from collections import Counter
+n = int(input())
+arr = list(map(int, input().split()))
+k = int(input())
+seen = set(arr)
+count = 0
+if k == 0:
+counts = Counter(arr)
+count = sum(1 for x in counts if counts[x] > 1)
+else:
+for x in seen:
+if x + k in seen: count += 1
+print(count)
+----------------------------------------------------------------------------
+
+FIXED LENGHT WINDOW and continous
+	
+	1.you need to identify only one element in window that is e       use  //deque datastructure
+		NOTE: when order important
+		* maximum
+		* minimum
+		* first negative
+		* largest
+		* smallest
+		* next greatest
+
+
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        stack=[]
+        max_=[]
+        for i in range(len(nums)):
+            if stack and stack[0]<=i-k:
+                stack.pop(0)
+            while stack and nums[i]>=nums[stack[-1]]:
+                stack.pop()
+            stack.append(i)
+            if i-k+1>=0:
+                max_.append(nums[stack[0]])
+        return max_   
+
+
+2.but count is related to overall elements in window                //dictonary datastructure
+	1. Use a Counter / Dictionary when you need frequencies
+		left,right points used here
+		left pointer is used for remove elemeents when condition is met
+
+* fixed lenght but not continuous
+	* sum k 				//prefix+hashmap
+	* triplets of k				//sorting + two pointer	
+	* four numbers of k	
+													
+VARIABLE LENGHT WINDOW
+mp = {0: -1}
+prefix = 0
+ans = 0
+
+for i in range(len(nums)):
+    prefix += nums[i]
+
+    if prefix - k in mp:
+        ans = max(ans, i - mp[prefix - k])                   //longest
+
+    if prefix not in mp:
+        mp[prefix] = i
+	
+-----------------------------------------------------------------------------------------------------------------------------------------------
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        max_=0
+        start=0
+        def expand(left,right):
+            while left>=0 and right<len(s) and s[left]==s[right]:
+                left-=1
+                right+=1
+            return left+1,right-left-1
+
+        for i in range(len(s)):
+            start1,l1=expand(i,i)
+            start2,l2=expand(i,i+1)
+
+            if max_<l1:
+                start=start1
+                max_=l1
+            
+            if max_<l2:
+                start=start2
+                max_=l2
+        return s[start:start+max_]
+--------------------------------------------------------------------------------------------------------------------------------------
+class Solution:
+    def primePalindrome(self, n: int) -> int:
+        def isprime(p):
+            if p<2:
+                return 0
+            i=2
+            while i*i<=p:
+                if p%i==0:
+                    return 0
+                i+=1
+            return 1
+        
+        if 8<=n<=11:
+            return 11                  #important
+
+        for i in range(1,1000000000):
+            s=str(i)
+            pal=int(s+s[-2::-1])
+            if pal>=n and isprime(pal):
+                return pal
+_________________________________________________________________________________________________________________________________
+IMPORTANT:
+____________________________________________________
+🔥 1. Sum of All Subarrays
+
+solution:a[i]×(i+1)×(n−i)
+
+2. Sum of Odd Length Subarrays
+
+oddcontribution:arr[i]*(((i+1)(n−i)+1)//2)
+	​
+
+
+🔥 3. Sum of Even Length Subarrays
+
+📌 Formula:
+evencount=
+even contribution=arr[i]*((i+1)(n-i))//2
+_______________________________________________________________________________________________________________________
+Sum of Subarray Maximums (Contribution Method)________________________IMPORTANT__________________________________
+For each element:
+
+find Previous Greater Element (PGE)
+find Next Greater Element (NGE)
+_______________________________FORMULA:contribution = arr[i] * left * right__________________________________
+
+SOLUTION:
+class Solution:
+    def subArrayRangesMax(self, arr):
+        n = len(arr)
+
+        # Previous Greater Element
+        prev_greater = [-1] * n
+        stack = []
+
+        for i in range(n):
+            while stack and arr[stack[-1]] <= arr[i]:
+                stack.pop()
+            prev_greater[i] = stack[-1] if stack else -1
+            stack.append(i)
+
+        # Next Greater Element
+        next_greater = [n] * n
+        stack = []
+
+        for i in range(n - 1, -1, -1):
+            while stack and arr[stack[-1]] < arr[i]:
+                stack.pop()
+            next_greater[i] = stack[-1] if stack else n
+            stack.append(i)
+
+        total = 0
+
+        for i in range(n):
+            left = i - prev_greater[i]
+            right = next_greater[i] - i
+            total += arr[i] * left * right
+
+        return total
+
+________________________________________________________________________
+_______________________________________________________________________________________________________________________
+Sum of Subarray MINIMUMS (Contribution Method)_________________________IMPORTANT_________________________
+For each element:
+
+find Previous SMALLER Element (PSE)
+find Next SMALLER Element (NSE)
+
+____________FORMULA:  contribution = arr[i] * left * right______________________________________________________________
+
+class Solution:
+    def sumSubarrayMins(self, arr):
+        n = len(arr)
+
+        # Previous Smaller Element
+        prev_smaller = [-1] * n
+        stack = []
+
+        for i in range(n):
+            while stack and arr[stack[-1]] >= arr[i]:
+                stack.pop()
+            prev_smaller[i] = stack[-1] if stack else -1
+            stack.append(i)
+
+        # Next Smaller Element
+        next_smaller = [n] * n
+        stack = []
+
+        for i in range(n - 1, -1, -1):
+            while stack and arr[stack[-1]] > arr[i]:
+                stack.pop()
+            next_smaller[i] = stack[-1] if stack else n
+            stack.append(i)
+
+        MOD = 10**9 + 7
+        total = 0
+
+        for i in range(n):
+            left = i - prev_smaller[i]
+            right = next_smaller[i] - i
+            total = (total + arr[i] * left * right) % MOD
+
+        return total
+____________________________________________________________________________________
+Sum of Subarray Ranges:
+
+class Solution:
+    def subArrayRanges(self, arr):
+        n = len(arr)
+
+        # ---------------- MAX PART ----------------
+        prev_greater = [-1] * n
+        stack = []
+
+        for i in range(n):
+            while stack and arr[stack[-1]] <= arr[i]:
+                stack.pop()
+            prev_greater[i] = stack[-1] if stack else -1
+            stack.append(i)
+
+        next_greater = [n] * n
+        stack = []
+
+        for i in range(n - 1, -1, -1):
+            while stack and arr[stack[-1]] < arr[i]:
+                stack.pop()
+            next_greater[i] = stack[-1] if stack else n
+            stack.append(i)
+
+        max_sum = 0
+        for i in range(n):
+            left = i - prev_greater[i]
+            right = next_greater[i] - i
+            max_sum += arr[i] * left * right
+
+        # ---------------- MIN PART ----------------
+        prev_smaller = [-1] * n
+        stack = []
+
+        for i in range(n):
+            while stack and arr[stack[-1]] >= arr[i]:
+                stack.pop()
+            prev_smaller[i] = stack[-1] if stack else -1
+            stack.append(i)
+
+        next_smaller = [n] * n
+        stack = []
+
+        for i in range(n - 1, -1, -1):
+            while stack and arr[stack[-1]] > arr[i]:
+                stack.pop()
+            next_smaller[i] = stack[-1] if stack else n
+            stack.append(i)
+
+        min_sum = 0
+        for i in range(n):
+            left = i - prev_smaller[i]
+            right = next_smaller[i] - i
+            min_sum += arr[i] * left * right
+
+        return max_sum - min_sum
+________________________________________________________
+
+8. Sum of All Pair Differences
+🧠 Problem:
+
+Sum of |a[i] - a[j]|
+
+📌 Formula: For finding sum of ALL pair differences:
+
+step 1: Sort array
+step 2: a[i]×i−a[i]×(n−i−1) APPLY THESE FORUMULA
+
+strings:
+_______________________________________________________________________________________________________________________________________
+
+class Solution:
+    def countSubstr (self, s, k):
+        def atmost(k):
+            d=dict()
+            ans=0
+            left=0
+            for right in range(len(s)):
+                d[s[right]]=d.get(s[right],0)+1
+                while len(d)>k:
+                    d[s[left]]-=1
+                    if d[s[left]]==0:
+                        del d[s[left]]
+                    left+=1
+                ans+=(right-left+1)
+            return ans
+        return atmost(k)-atmost(k-1)
+
+_____________________________________________________________________________________________________________________________________
+
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        left=0
+        ans=float('inf')
+        nt=Counter(t)
+        result=dict()
+        counter=0
+        for right in range(len(s)):
+            if s[right] in t:
+                result[s[right]]=result.get(s[right],0)+1
+                if result[s[right]]<=nt[s[right]]:
+                    counter+=1
+            start=0
+            while counter==len(t):
+                if ans>(right-left+1):
+                    start=left
+                    ans=(right-left+1)
+                if s[left] in t:                                  #imporatant
+                    result[s[left]]-=1					#
+                    if result[s[left]]<nt[s[left]]:			#
+                        counter-=1					#
+                    if result[s[left]]==0:				#
+                        del result[s[left]]				#
+                left+=1
+        if ans == float('inf'):
+            return ""
+
+        return s[start:start + ans]
+
+_______________________________________________________________________________________________________________________________
+
+how to check palindrome
+def expand(l,r):
+    while l>=0 and r<len(s) and s[l]==s[r]:
+        l-=1
+        r+=1
+_______________________________________________________________________________________________________________________________
+
+class Solution:
+    def partition(self, s: str) -> List[List[str]]:
+        result=[]
+        def p(a):
+            return a==a[::-1]
+        def palin(start,path):
+            if start==len(s):
+                result.append(path[:])
+                return
+            for i in range(start,len(s)):
+                new=s[start:i+1]
+                if p(new):
+                    path.append(new)
+                    palin(i+1,path)
+                    path.pop()
+        palin(0,[])
+        return result
+
+
+mergesort:
+
+class Solution:
+    def sortArray(self, nums: list[int]) -> list[int]:
+
+        def mergesort(nums):                              
+            if len(nums) <= 1:                                #important condition
+                return nums
+
+            mid = len(nums) // 2
+
+            leftsub = mergesort(nums[:mid])
+            rightsub = mergesort(nums[mid:])
+
+            return merge(leftsub, rightsub)
+
+        def merge(leftsub, rightsub):
+            result = []
+            i = j = 0
+
+            while i < len(leftsub) and j < len(rightsub):
+                if leftsub[i] <= rightsub[j]:
+                    result.append(leftsub[i])
+                    i += 1
+                else:
+                    result.append(rightsub[j])
+                    j += 1
+
+            result.extend(leftsub[i:])
+            result.extend(rightsub[j:])
+
+            return result
+
+        return mergesort(nums)
+
+quicksort:
+ class Solution:
+    def sortArray(self, nums: list[int]) -> list[int]:
+        def quick(nums):
+            if len(nums)<=1:                                      #important condition
+                return nums
+            pivot=-1
+            left=[]
+            right=[]
+            for i in range(len(nums)):
+                if nums[i]<nums[pivot]:
+                    left.append(nums[i])
+                else:
+                    right.append(nums[i])
+            return quick(left)+[nums[pivot]]+quick(right)
+        return quick(nums)

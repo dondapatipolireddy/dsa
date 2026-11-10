@@ -1,0 +1,452 @@
+
+| #  | Problem                                        | LeetCode # | Difficulty | Importance |
+| -- | ---------------------------------------------- | ---------- | ---------- | ---------- |
+| 1  | Find if Path Exists in Graph                   | **1971**   | Easy       | ⭐⭐⭐⭐⭐      |
+| 2  | Clone Graph                                    | **133**    | Medium     | ⭐⭐⭐⭐       |
+| 3  | Number of Islands                              | **200**    | Medium     | ⭐⭐⭐⭐⭐      |
+| 4  | Max Area of Island                             | **695**    | Medium     | ⭐⭐⭐⭐       |
+| 5  | Flood Fill                                     | **733**    | Easy       | ⭐⭐⭐⭐       |
+| 6  | Number of Provinces                            | **547**    | Medium     | ⭐⭐⭐⭐⭐      |
+| 7  | Surrounded Regions                             | **130**    | Medium     | ⭐⭐⭐⭐       |
+| 8  | Rotten Oranges                                 | **994**    | Medium     | ⭐⭐⭐⭐⭐      |
+| 9  | Walls and Gates *(Premium)*                    | **286**    | Medium     | ⭐⭐⭐        |
+| 10 | Pacific Atlantic Water Flow                    | **417**    | Medium     | ⭐⭐⭐⭐       |
+| 11 | Course Schedule                                | **207**    | Medium     | ⭐⭐⭐⭐⭐      |
+| 12 | Course Schedule II                             | **210**    | Medium     | ⭐⭐⭐⭐⭐      |
+| 13 | Is Graph Bipartite?                            | **785**    | Medium     | ⭐⭐⭐⭐       |
+| 14 | Possible Bipartition                           | **886**    | Medium     | ⭐⭐⭐⭐       |
+| 15 | All Paths From Source to Target                | **797**    | Medium     | ⭐⭐⭐⭐       |
+| 16 | Keys and Rooms                                 | **841**    | Medium     | ⭐⭐⭐⭐       |
+| 17 | Network Delay Time                             | **743**    | Medium     | ⭐⭐⭐⭐⭐      |
+| 18 | Cheapest Flights Within K Stops                | **787**    | Medium     | ⭐⭐⭐⭐       |
+| 19 | Path With Minimum Effort                       | **1631**   | Medium     | ⭐⭐⭐⭐       |
+| 20 | Minimum Genetic Mutation                       | **433**    | Medium     | ⭐⭐⭐        |
+| 21 | Word Ladder                                    | **127**    | Hard       | ⭐⭐⭐⭐⭐      |
+| 22 | Open the Lock                                  | **752**    | Medium     | ⭐⭐⭐⭐       |
+| 23 | Reconstruct Itinerary                          | **332**    | Hard       | ⭐⭐⭐        |
+| 24 | Redundant Connection                           | **684**    | Medium     | ⭐⭐⭐⭐⭐      |
+| 25 | Redundant Connection II                        | **685**    | Hard       | ⭐⭐⭐        |
+| 26 | Accounts Merge                                 | **721**    | Medium     | ⭐⭐⭐⭐       |
+| 27 | Number of Operations to Make Network Connected | **1319**   | Medium     | ⭐⭐⭐⭐       |
+| 28 | Min Cost to Connect All Points                 | **1584**   | Medium     | ⭐⭐⭐⭐       |
+| 29 | Critical Connections in a Network              | **1192**   | Hard       | ⭐⭐⭐        |
+| 30 | Find Eventual Safe States                      | **802**    | Medium     | ⭐⭐⭐⭐       |
+| 31 | Alien Dictionary *(LintCode 892 / GFG)*        | N/A        | Hard       | ⭐⭐⭐⭐       |
+| 32 | Detect Cycle in Undirected Graph               | GFG        | Medium     | ⭐⭐⭐⭐⭐      |
+| 33 | Detect Cycle in Directed Graph                 | GFG        | Medium     | ⭐⭐⭐⭐⭐      |
+| 34 | BFS of Graph                                   | GFG        | Easy       | ⭐⭐⭐⭐⭐      |
+| 35 | DFS of Graph                                   | GFG        | Easy       | ⭐⭐⭐⭐⭐      |
+| 36 | Topological Sort                               | GFG        | Medium     | ⭐⭐⭐⭐⭐      |
+| 37 | Dijkstra Algorithm                             | GFG        | Medium     | ⭐⭐⭐⭐⭐      |
+| 38 | Bellman-Ford Algorithm                         | GFG        | Medium     | ⭐⭐⭐⭐       |
+| 39 | Floyd-Warshall Algorithm                       | GFG        | Medium     | ⭐⭐⭐        |
+| 40 | Minimum Spanning Tree (Prim/Kruskal)           | GFG        | Medium     | ⭐⭐⭐⭐       |
+
+Top 15 Graph Questions for Placements (Must Solve)
+1971 – Find if Path Exists in Graph
+200 – Number of Islands
+547 – Number of Provinces
+733 – Flood Fill
+994 – Rotten Oranges
+133 – Clone Graph
+207 – Course Schedule
+210 – Course Schedule II
+785 – Is Graph Bipartite?
+684 – Redundant Connection
+743 – Network Delay Time
+127 – Word Ladder
+752 – Open the Lock
+417 – Pacific Atlantic Water Flow
+721 – Accounts Merge
+-----------------------------------------------------------------------------------
+pacific atlantic water flow
+class Solution:
+    def pacificAtlantic(self, heights):
+        rows = len(heights)
+        cols = len(heights[0])
+
+        pacific = set()
+        atlantic = set()
+
+        def dfs(r, c, visited):
+            if r < 0 or c < 0 or r >= rows or c >= cols:
+                return
+
+            if (r, c) in visited:
+                return
+
+            visited.add((r, c))
+
+            if r + 1 < rows and heights[r + 1][c] >= heights[r][c]:
+                dfs(r + 1, c, visited)
+
+            if r - 1 >= 0 and heights[r - 1][c] >= heights[r][c]:
+                dfs(r - 1, c, visited)
+
+            if c + 1 < cols and heights[r][c + 1] >= heights[r][c]:
+                dfs(r, c + 1, visited)
+
+            if c - 1 >= 0 and heights[r][c - 1] >= heights[r][c]:
+                dfs(r, c - 1, visited)
+
+        # Pacific
+        for c in range(cols):
+            dfs(0, c, pacific)
+
+        for r in range(rows):
+            dfs(r, 0, pacific)
+
+        # Atlantic
+        for c in range(cols):
+            dfs(rows - 1, c, atlantic)
+
+        for r in range(rows):
+            dfs(r, cols - 1, atlantic)
+
+        result = []
+
+        for r in range(rows):
+            for c in range(cols):
+                if (r, c) in pacific and (r, c) in atlantic:
+                    result.append([r, c])
+
+        return result
+_______________________________________________________________________________________
+class Node:
+    def __init__(self, val = 0, neighbors = None):
+        self.val = val
+        self.neighbors = neighbors if neighbors is not None else []
+
+133. Clone Graph:
+-_____________________________________
+from typing import Optional
+class Solution:
+    def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
+        visited={}
+        if not node:
+            return
+        def dfs(node):
+            if node in visited:
+                return visited[node]
+            noded=Node(node.val)
+            visited[node]=noded
+            for i in node.neighbors:
+                noded.neighbors.append(dfs(i))
+            return noded
+        return dfs(node)
+_____________________important____________________________
+
+Pattern to Remember
+
+All grid DFS problems follow the same structure:
+
+def dfs(r, c):
+
+    if out_of_bounds:
+        return
+
+    if invalid_cell:
+        return
+
+    # Process current cell
+
+    dfs(up)
+    dfs(down)
+    dfs(left)
+    dfs(right)
+
+Flood Fill, Number of Islands, and Max Area of Island all use this same DFS template with only the base condition and processing step changing.
+islands:
+___________________________________________________________________________________________________________________
+class Solution:
+    def floodFill(self, image: List[List[int]], sr: int, sc: int, color: int) -> List[List[int]]:
+        old=image[sr][sc]
+        def dfs(sr,sc):
+            if sr<0 or sc<0 or sr>=len(image) or sc>=len(image[0]):
+                return
+            if image[sr][sc]!=old or image[sr][sc]==color: ----------------------------------important_______________
+                return
+            image[sr][sc]=color
+            dfs(sr+1,sc)
+            dfs(sr-1,sc)
+            dfs(sr,sc+1)
+            dfs(sr,sc-1)
+        dfs(sr,sc)
+__________________________________________________________________________________________________________________________________________
+class Solution:
+    def numIslands(self, grid):
+
+        rows = len(grid)
+        cols = len(grid[0])
+
+        def dfs(r, c):
+
+            # Out of bounds or water
+            if r < 0 or c < 0 or r >= rows or c >= cols:
+                return
+
+            if grid[r][c] == "0":
+                return
+
+            # Mark as visited
+            grid[r][c] = "0"
+
+            # Visit 4 directions
+            dfs(r+1, c)
+            dfs(r-1, c)
+            dfs(r, c+1)
+            dfs(r, c-1)
+
+        islands = 0
+
+        for r in range(rows):
+            for c in range(cols):
+
+                if grid[r][c] == "1":
+                    islands += 1
+                    dfs(r, c)
+
+        return islands
+_____________________________________________________________________________________________________________________________________
+547. Number of Provinces
+class Solution:
+    def findCircleNum(self, isConnected: List[List[int]]) -> int:
+        visited=[0]*len(isConnected)
+        def dfs(node):
+            if visited[node]==1:
+                return
+            visited[node]=1
+            for i in range(len(isConnected[node])):
+                    if isConnected[node][i]==1:
+                        dfs(i)
+        count=0
+        for i in range(len(isConnected)):
+            if visited[i]!=1:
+                count+=1
+                dfs(i)
+        return count
+_______________________________________________________________________________________________________________________________________
+
+class Solution:
+    def findRedundantConnection(self, edges: List[List[int]]) -> List[int]:
+        def dfs(u,v,visited):
+            if u==v:
+                return True
+            visited.add(u)
+            for nei in graph[u]:
+                if nei not in visited:
+                    if dfs(nei,v,visited):
+                        return True
+            return False
+
+        graph=defaultdict(list)
+        for u,v in edges:
+            visited=set()
+            if (u in graph) and (v in graph) and dfs(u,v,visited):
+                return [u,v]
+            graph[u].append(v)
+            graph[v].append(u)
+
+_______________________________________________________________________________________________________________________________
+cycle in directed graph
+
+from collections import defaultdict
+
+class Solution:
+
+    def isCycle(self, V, edges):
+
+        graph = defaultdict(list)
+
+        # Build directed graph
+        for u, v in edges:
+            graph[u].append(v)
+
+        visited = set()
+        path = set()
+
+        def dfs(node):
+
+            if node in path:
+                return True
+
+            if node in visited:
+                return False
+
+            visited.add(node)
+            path.add(node)
+
+            for nei in graph[node]:
+                if dfs(nei):
+                    return True
+
+            path.remove(node)
+
+            return False
+
+        for i in range(V):
+            if dfs(i):
+                return True
+
+        return False
+
+cycle in undirectedgraph:
+def dfs(graph):
+   visited=set()
+   stack=list()
+   
+   for start in graph:
+	if start not in visited:
+		visited.add(start)
+	stack.append((start,-1))
+   	while stack:
+		u,parent=stack.pop()
+		for neigh in graph[u]:
+			if neigh not in visited:
+				visited.add(neigh)
+				stack.append((neigh,u))
+			elif neigh!=parent:
+				return True
+   return False
+			
+
+
+def dfs(u,v,visited):
+            if u==v:
+                return True
+            visited.add(u)
+            for nei in graph[u]:
+                if nei not in visited:
+                    if dfs(nei,v,visited):
+                        return True
+            return False
+_______________________________________________________________________________________________________________________________
+prims's :
+from collections import defaultdict
+import heapq
+
+class Solution:
+
+    def minCost(self, n, edges):
+
+        graph = defaultdict(list)
+
+        for u, v, w in edges:
+            graph[u].append((v, w))
+            graph[v].append((u, w))
+
+        visited = set()
+
+        heap = [(0, 0)]      # (weight, node)
+
+        cost = 0
+
+        while heap:
+
+            wt, node = heapq.heappop(heap)
+
+            if node in visited:
+                continue
+
+            visited.add(node)
+
+            cost += wt
+
+            for nei, w in graph[node]:
+                if nei not in visited:
+                    heapq.heappush(heap, (w, nei))
+
+        return cost
+__________________________________________________________________________________________________________________
+
+network delay:
+class Solution:
+    def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int: 
+        graph=defaultdict(list)
+        for u,v,w in times:
+            graph[u].append((v,w))
+        dist=[float('inf')]*(n+1)
+        heap=[(0,k)]
+        dist[k]=0
+        while heap:
+            curr,node=heapq.heappop(heap)
+            if curr>dist[node]:
+                continue
+            for neigh,wt in graph[node]:
+                if dist[neigh]>curr+wt:
+                    dist[neigh]=curr+wt
+                    heapq.heappush(heap,(curr+wt,neigh))   
+        ans=max(dist[1:])
+        if ans==float('inf'):
+            return -1
+        return ans     
+______________________________________________________________________________________________________________________________
+******************130. Surrounded Regions--------------------------------------------
+class Solution:
+    def solve(self, board: List[List[str]]) -> None:
+        r=len(board)
+        c=len(board[0])
+        def dfs(i,j):
+            if i<0 or j<0 or i>=r or j>=c:
+                return
+            
+            if board[i][j]=="X" or board[i][j]=='T':  #(or) board[i][j]!=O        *************important************
+                return
+            
+            board[i][j]='T'
+            dfs(i,j+1)
+            dfs(i,j-1)
+            dfs(i+1,j)
+            dfs(i-1,j)
+
+        for i in range(c):
+            if board[0][i]=='O':
+                dfs(0,i)
+            if board[r-1][i]=='O':
+                dfs(r-1,i)
+
+        for i in range(r):
+            if board[i][0]=='O':
+                dfs(i,0)
+            if board[i][c-1]=='O':
+                dfs(i,c-1)
+
+        for i in range(r):
+            for j in range(c):
+                if board[i][j]=='O':
+                    board[i][j]='X'
+                elif board[i][j]=='T':
+                    board[i][j]='O'
+_______________________________________________________________________________________
+
+floyard warshall's algorithem:
+
+def floydWarshall(dist):
+    n = len(dist)
+
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                dist[i][j] = min(dist[i][j],dist[i][k] + dist[k][j])
+
+    return dist
+_________________________________________________________________________________________
+Bellam ford algorithem:
+
+def bellman_ford(V, edges, src):
+    dist = [float('inf')] * V
+    dist[src] = 0
+
+    # Relax all edges V-1 times
+    for _ in range(V - 1):
+        for u, v, wt in edges:
+            if dist[u] != float('inf') and dist[u] + wt < dist[v]:
+                dist[v] = dist[u] + wt
+
+    # Check for negative weight cycle
+    for u, v, wt in edges:
+        if dist[u] != float('inf') and dist[u] + wt < dist[v]:
+            return [-1]
+
+    return dist
+_________________________________________________________________________________
