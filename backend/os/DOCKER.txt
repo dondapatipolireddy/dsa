@@ -1,0 +1,209 @@
+DOCKER:https://chatgpt.com/c/6a2ab363-da30-8324-aaf1-4a7d21f20792
+_______________________________	
+DEFINITION:
+	Docker is an open-source containerization platform that allows developers to package an application along with all its dependencies into
+a container so it runs the same way on any computer.
+__________________________________________________________
+| Virtual Machine       | Container                |
+| --------------------- | ------------------------ |
+| Has Guest OS          | No Guest OS              |
+| Heavy                 | Lightweight              |
+| Slow startup          | Fast startup             |
+| Uses more RAM         | Uses less RAM            |
+| Large size (GBs)      | Small size (MBs)         |
+| Boots in minutes      | Starts in seconds        |
+| Strong isolation      | Process-level isolation  |
+| Managed by Hypervisor | Managed by Docker Engine |
+__________________________________________________________________
+
+Why Containers are Faster?
+IN VM:
+Power On -> Boot Ubuntu -> Load Drivers -> Load Kernel -> Start Application
+
+IN CONTAINER:
+Start Docker
+
+↓
+
+Run Application               _____________________________*******(BOOTING IS NOT REQUIRED)*******________________________
+
+Q5. What is the biggest advantage of Docker?
+Consistency across development, testing, and production environments—helping eliminate the common problem of "It works on my machine."
+
+
+ADVANTAGES:
+____________________________
+1.ISOLATION
+2.PORTABILITY
+3.LIGHT WEIGHT
+4.CONSISTENCY ACROSS ENVIRONMENTS
+5.FAST DEPLOYMENT
+6.EASY SHARING
+7.VERSION CONTROL:
+Different versions can coexist.
+
+Example
+
+myapp:v1
+
+myapp:v2
+
+myapp:v3
+
+You can switch versions easily without reinstalling software.
+_________________________________________________________________________________________________________________________________________
+1. What is Docker Architecture?
+Docker Architecture is the design that describes how the Docker Client, Docker Daemon, Docker Host, Docker Images, Containers, 
+and Docker Registry work together to build and run containerized applications.
+
+4. What happens when you run docker run nginx?
+Docker Client receives the command.
+Docker Client sends the request to the Docker Daemon.
+The Daemon checks whether the nginx image exists locally.
+If it does not exist, the Daemon downloads it from the Docker Registry (such as Docker Hub).
+The Daemon creates a container from the image.
+The container starts and the Nginx server begins running.
+
+DOCKER FILE:(https://chatgpt.com/c/6a0db6b5-2ca0-8323-8d1f-48c16a3e6111) VISIT THESE LINK
+_______________________________________
+
+DEFINTION:  A Dockerfile is a text file that defines how your image is built (OR) CREATE CUSTOM IMAGES.
+
+
+# Use an official base image
+FROM node:18
+
+# Set working directory inside container
+WORKDIR /app
+
+# Copy files into container
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy rest of the app
+COPY . .
+
+# Expose port
+EXPOSE 3000
+
+# Command to run the app
+CMD ["npm", "start"]
+
+
+
+INnterview Question
+
+Q: Why do we use COPY package*.json ./ before COPY . .?
+
+Answer: To leverage Docker layer caching. Dependencies are installed only when package.json changes, making builds faster.
+
+So, COPY . . is a generic command that means "copy all project files", but the base image, exposed port, and startup command change
+ according to the application type (React, Express, Flask, Java, etc.).
+
+
+Response 1
+
+No. This Dockerfile is not the same for every application. Some parts remain the same, while others change depending on the application.
+
+Usually the same
+FROM node:18
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+
+These lines are common for many Node.js applications.
+
+Changes for different applications
+1. Different Node version
+FROM node:20
+
+or
+
+FROM node:22
+
+depending on the project requirements.
+
+2. Different port
+
+React app:
+
+EXPOSE 3000
+
+Express backend:
+
+EXPOSE 5000
+
+Next.js:
+
+EXPOSE 3000
+3. Different start command
+
+Express app:
+
+CMD ["node", "server.js"]
+
+or
+
+CMD ["npm", "start"]
+
+React development server:
+
+CMD ["npm", "start"]
+
+Next.js:
+
+CMD ["npm", "run", "start"]
+4. Production React app
+
+Instead of:
+
+CMD ["npm", "start"]
+
+you usually build and serve with Nginx:
+
+RUN npm run build
+
+Then use an Nginx image.
+
+Examples
+Express Backend
+FROM node:18
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+EXPOSE 5000
+
+CMD ["node", "server.js"]
+React Frontend
+FROM node:18
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+EXPOSE 3000
+
+CMD ["npm", "start"]
+Python Flask
+FROM python:3.11
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+COPY . .
+
+CMD ["python", "app.py"]
+

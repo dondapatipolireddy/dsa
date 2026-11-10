@@ -1,0 +1,241 @@
+https://chatgpt.com/c/6a4e6605-64e4-83ee-b3e8-d3ea13afc8a4
+https://chatgpt.com/c/6a942771-65c0-83ee-bbe3-059fb846c055
+
+-----------------*************hooks:desktop /reactjs hooks.pdf****************------------------------------
+
+SINGLE PAGE APPLICATION:
+--------------------------
+“A Single Page Application, or SPA, is a web application where the browser loads the main 
+page once, and after that, when we navigate or interact with the application, only the 
+required content is updated instead of reloading the entire page.”
+
+ADVANTAGES:
+********Faster navigation******* after the initial load
+*********Better user experience******
+Only *****required data/content is updated*****
+____________________________________________________________________________________________________________________
+What is JSX in React?
+JSX stands for JavaScript XML. It is a syntax extension for JavaScript that allows us to write HTML-like code 
+inside JavaScript when building React user interfaces.
+____________________________________________________________________________________________________________________
+REACT:
+	React is an open-source JavaScript library developed by Meta for building fast, interactive, and reusable user interfaces. It follows 
+a component-based architecture, uses a Virtual DOM for efficient updates, and is mainly used to build Single Page Applications.
+_________________________________________________________________________________________________________________________________
+Why React instead of JavaScript?
+
+Answer
+
+React provides:
+
+Component-based architecture
+Virtual DOM
+Better performance
+Reusable code
+Easier maintenance
+Large ecosystem
+
+________________________________________________________________________________________________________________________________________
+What is Virtual DOM?
+
+The Virtual DOM is a lightweight JavaScript copy of the Real DOM.
+React updates the Virtual DOM first.
+
+Diffing
+
+React compares:
+
+Old Virtual DOM
+
+↓
+
+New Virtual DOM
+
+↓
+
+Finds differences
+
+↓
+
+Updates only those changes.
+
+This comparison process is called Diffing.
+____________________________________________________________________________________________
+
+What is Virtual DOM?
+
+Answer
+
+Virtual DOM is a lightweight copy of the Real DOM. React updates the Virtual DOM, compares it with the previous version using a diffing 
+algorithm, and updates only the changed elements in the Real DOM, improving performance.
+____________________________________________________________________________________________________________________________________
+
+| Real DOM                         | Virtual DOM                |
+| -------------------------------- | -------------------------- |
+| Actual browser DOM               | JavaScript copy of DOM     |
+| Slower updates                   | Faster updates             |
+| Updates entire affected DOM tree | Updates only changed parts |
+| Browser manages it               | React manages it           |
+
+| HTML                      | JSX                                 |
+| ------------------------- | ----------------------------------- |
+| `class`                   | `className`                         |
+| `for`                     | `htmlFor`                           |
+| No JavaScript expressions | Supports JavaScript using `{}`      |
+| Normal HTML               | Compiled to `React.createElement()` |
+__________________________________________________________________________________________________________________
+Q5. What is Diffing?
+Answer: Diffing is the process of comparing the old and new Virtual DOM trees to identify changes.
+_________________________________________________________________________________________________________________
+Q6. What is Reconciliation?
+Answer: Reconciliation is React's process of updating the Real DOM based on the differences found during diffing.
+________________________________________________________________________________________________________________
+*******************************FUNCTION VS CLASS COMPONENTS***********
+A functional component is a JavaScript function that returns JSX and can use React Hooks for
+state, effects, refs, context, and other functionality. A class component extends React.
+Component and uses this.state, this.setState(), and lifecycle methods. Functional components
+ are the preferred approach in modern React because they are simpler and more concise
+--------------------------
+COMPONENT METHODS:
+
+Component Created
+       ↓
+   Mounting
+       ↓
+   Updating
+       ↓
+  Unmounting
+       ↓
+Component Removed
+---------------------------------------------------------------
+Important lifecycle methods in class components
+Phase	Lifecycle method	Purpose
+Mounting	constructor()	Initializes state
+Mounting	render()	Displays UI
+Mounting	componentDidMount()	Runs after the component mounts
+Updating	shouldComponentUpdate()	Decides whether to re-render
+Updating	componentDidUpdate()	Runs after an update
+Unmounting	componentWillUnmount()	Cleanup before removal
+-------------------------------------------------------------------------------
+| Function Component       | Class Component                                 |
+| ------------------------ | ----------------------------------------------- |
+| JavaScript function      | JavaScript class                                |
+| Uses Hooks               | Uses lifecycle methods                          |
+| `useState()` for state   | `this.state`                                    |
+| `setCount()` / setter    | `this.setState()`                               |
+| `useEffect()`            | `componentDidMount`, `componentDidUpdate`, etc. |
+| No `this` keyword needed | Uses `this`                                     |
+| Less code                | More code                                       |
+| Modern React approach    | Older React approach                            |
+| Easier to learn          | More complex                                    |
+| Recommended for new code | Mostly used in older codebases                  |
+______________________________________________________________________________________________________
+		****Routing******
+Routing: Routing in React means navigating between different pages or views of a website without reloading 
+	the entire page.
+Important:
+	***********npm install react-router-dom************
+
+BrowserRoute :It enables routing by monitoring the browser's URL and rendering the appropriate components.
+
+| Routes                          | Route                          |
+| ------------------------------- | ------------------------------ |
+| Container for all routes        | Defines one specific route     |
+| Holds multiple Route components | Maps one path to one component |
+
+
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
+
+import Home from "./Home";
+import About from "./About";
+
+function App() {
+  return (
+    <BrowserRouter>
+      <nav>
+        <Link to="/">Home</Link>{" "}
+        <Link to="/about">About</Link>
+      </nav>
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default App;
+
+____________________________________________________________________________________________
+
+HOOKS: hooks:desktop /reactjs hooks.pdf
+
+Hooks are special built-in functions in React that let Functional Components use features 
+like state, lifecycle methods, references, context, performance optimizations, and more.
+_______________________________________________________________________________________________________
+
+IMPORTANT:
+->A Custom Hook in React is a reusable JavaScript function whose name starts with `use`. It allows us to reuse 
+ stateful logic across multiple functional components.
+
+->For example, we can create a `useCounter()` Custom Hook to manage counter logic using `useState()`, and reuse it
+ in different components without duplicating the code.
+
+->One important point is that each component gets its own state when it uses the Custom Hook, unless we explicitly 
+ use a shared state mechanism.
+
+*******NOTE******:
+	Custom Hooks can be called only in functional components or other Custom Hooks, not directly inside class
+components.
+
+EXAMPLE:
+
+---------------------------------------------------------
+import { useState } from "react";
+
+function useCounter() {
+  const [count, setCount] = useState(0);
+
+  const increment = () => {
+    setCount(prev => prev + 1);
+  };
+
+  const decrement = () => {
+    setCount(prev => prev - 1);
+  };
+
+  const reset = () => {
+    setCount(0);
+  };
+
+  return { count, increment, decrement, reset };
+}
+
+export default useCounter;
+--------------------------------------------------------------
+
+
+import useCounter from "./useCounter";
+
+function Counter() {
+  const { count, increment, decrement, reset } = useCounter();
+
+  return (
+    <div>
+      <h2>Count: {count}</h2>
+
+      <button onClick={increment}>Increment</button>
+      <button onClick={decrement}>Decrement</button>
+      <button onClick={reset}>Reset</button>
+    </div>
+  );
+}
+
+export default Counter;
+______________________________________________________________________________

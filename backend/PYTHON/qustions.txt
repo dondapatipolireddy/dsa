@@ -1,0 +1,88 @@
+Q: What is constructor overloading?
+Constructor overloading is the process of defining multiple constructors in the same class with different parameter lists. It allows
+objects to be initialized in different ways. The Java compiler selects the appropriate constructor based on the number, type, and order of arguments passed.
+
+How it is achieved in python:
+	In Python, constructor overloading is not supported directly.
+	Instead, we achieve the same behavior using:
+	    1.Default arguments (most common)
+	    2.*args
+	    3.**kwargs
+
+Q: Does Python support constructor overloading?
+
+Answer:
+
+No. Python does not support constructor overloading like Java because a class can have only one __init__() method. If multiple 
+__init__() methods are defined, the last one overrides the previous ones. To achieve similar behavior, Python uses default arguments, 
+*args, or **kwargs.
+
+What is Operator Overloading?
+Definition
+
+Operator overloading means changing or redefining the behavior of an operator (+, -, *, ==, etc.) for user-defined objects.
+(or)
+Operator overloading is the process of giving a new meaning to an existing operator for user-defined objects. In Python, this is achieved
+ by implementing special methods such as __add__(), __sub__(), and __eq__().
+
+Python lets you do this using special (magic/dunder) methods.
+
+| Operator | Special Method  |
+| -------- | --------------- |
+| `+`      | `__add__()`     |
+| `-`      | `__sub__()`     |
+| `*`      | `__mul__()`     |
+| `/`      | `__truediv__()` |
+| `==`     | `__eq__()`      |
+| `<`      | `__lt__()`      |
+| `>`      | `__gt__()`      |
+| `<=`     | `__le__()`      |
+| `>=`     | `__ge__()`      |
+| `!=`     | `__ne__()`      |
+
+
+without __add__()
+________________________________
+class Student:
+
+    def __init__(self, marks):
+        self.marks = marks
+
+s1 = Student(80)
+s2 = Student(90)
+
+print(s1 + s2)
+
+___________TypeError__________
+____________________________
+Solution: Override __add__()
+class Student:
+
+    def __init__(self, marks):
+        self.marks = marks
+
+    def __add__(self, other):
+        return self.marks + other.marks
+
+s1 = Student(80)
+s2 = Student(90)
+
+print(s1 + s2)
+____________________________________________________________________________________
+Interview Answer
+
+Q: Does Python have a final keyword?
+
+Answer:
+Python does not have a built-in final keyword like Java. Instead, it provides @final and Final in the typing module. 
+They are mainly used by static type checkers to indicate that a class should not be inherited, a method should not be overridden, or a 
+variable should not be reassigned. Python itself does not enforce these restrictions at runtime.
+
+| Java `final`         | Python Equivalent                      |
+| -------------------- | -------------------------------------- |
+| Final variable       | `Final`                                |
+| Final method         | `@final`                               |
+| Final class          | `@final`                               |
+| Enforced by compiler | Checked mainly by static type checkers |
+
+

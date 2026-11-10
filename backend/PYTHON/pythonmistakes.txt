@@ -1,0 +1,73 @@
+nonlocal is used when a nested function wants to modify a variable that belongs to the enclosing function.
+
+Example
+def outer():
+    count = 0
+
+    def inner():
+        nonlocal count
+        count += 1
+
+    inner()
+    print(count)
+
+outer()
+
+Output:
+
+1
+Without nonlocal
+def outer():
+    count = 0
+
+    def inner():
+        count += 1
+
+    inner()
+
+Error:
+
+UnboundLocalError:
+local variable 'count' referenced before assignment
+
+Why?
+
+Python thinks:
+
+count += 1
+
+means
+
+count = count + 1
+
+Since you're assigning to count, Python assumes it's a new local variable inside inner(). But before it can assign, it needs the old
+ value of count, which doesn't exist locally—so you get an error.
+
+
+
+Pattern to Remember
+
+All grid DFS problems follow the same structure:
+
+def dfs(r, c):
+
+    if out_of_bounds:            ex:   if sr<0 or sc<0 or sr>=rows or sc>=cols:
+        return
+
+    if invalid_cell:
+        return
+
+    # Process current cell
+
+    dfs(up)
+    dfs(down)
+    dfs(left)
+    dfs(right)
+
+Flood Fill, Number of Islands, and Max Area of Island all use this same DFS template with only the base condition and processing step changing.
+
+
+
+
+
+

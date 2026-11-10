@@ -1,0 +1,58 @@
+ SOC(SECURITY OPERATION CENTER):
+______________________________________________________
+	IT'S A TEAM IN COMPANY THERE AIM IS TO  {MONITORING,DETECTING,PREVENTING,INVESTIGAING,RESPONSING TO THREATS OF COMPANY 
+NETWORKS AND SYSTEMS.
+NOTE:
+1.The main focus of the SOC team is to keep Detection and Response intact.
+2.These solutions integrate the whole company’s network and all the systems to monitor them from one centralized location.
+
+SOC Analyst (Level 1): Monitors alerts and performs initial triage of security incidents.
+SOC Analyst (Level 2): Investigates alerts in depth and correlates data from multiple sources.
+SOC Analyst (Level 3): Hunts threats and leads incident response for critical attacks.
+Security Engineer: Deploys, configures, and maintains security tools.
+Detection Engineer: Creates and improves detection rules to identify threats.
+SOC Manager: Manages the SOC team, processes, and reports security status to the CISO.
+
+BlueTEAM :
+____________________________________________________
+	A blue team comprises of CyberSecurity and technology Professionals there aim is to protect InformationSystems from impending 
+CyberThreats by performing and implementing defensive actions. 
+
+Technology (SOC Pillar) – In Short
+Technology: Security tools used to detect, investigate, and respond to cyber threats.
+Key Security Solutions
+SIEM (Security Information and Event Management):
+Collects logs from multiple devices.
+Uses detection rules to identify suspicious activity.
+Generates alerts for SOC analysts.
+Main role: Detection.
+EDR (Endpoint Detection and Response):
+Monitors endpoint devices (PCs, laptops, servers).
+Detects threats and provides detailed investigation.
+Can automatically respond to attacks.
+Main role: Detection + Response.
+Firewall:
+Protects the network by filtering incoming and outgoing traffic.
+Blocks unauthorized or malicious connections.
+Main role: Network Protection.
+Other SOC Tools
+Antivirus: Detects and removes malware.
+EPP (Endpoint Protection Platform): Prevents endpoint attacks.
+IDS/IPS: Detects (IDS) and blocks (IPS) network intrusions.
+XDR (Extended Detection and Response): Combines data from multiple security tools.
+SOAR (Security Orchestration, Automation, and Response): Automates security workflows and incident response.
+Easy Interview Memory Trick
+SIEM → Collects Logs & Detects
+EDR → Monitors Endpoints & Responds
+Firewall → Filters Network Traffic
+SOAR → Automates Response
+XDR → Combines Security Data
+IDS → Detects
+IPS → Detects + Blocks
+__________________________________________________________________________________________________________________________________________
+Security Departments
+In tiny companies, the IT department takes the role of securing the company. Small to medium-sized companies may have a generic "Information Security" team that does all sorts of tasks. For this room, we will focus on bigger companies with a CISO overseeing multiple security teams, each handling a specific task. For example:
+
+Red Team: Offensive security experts, pentesters, or ethical hackers who look for security issues
+GRC Team: Specialists managing policies and ensuring compliance with regulations like PCI DSS(opens in new tab)
+Blue Team: Defensive security experts like SOC analysts, engineers, or incident responders

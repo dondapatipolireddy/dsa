@@ -1,0 +1,15 @@
+https://cdn-images-1.medium.com/max/800/1*8Wh8KHhTWlhKOd8fvNCl1A.jpeg   // for timecomplexity for sorting algorithems
+https://chatgpt.com/c/6a846236-ec18-83ee-badd-18d9e3a7bc53              // how protection is provided in python
+https://chatgpt.com/c/67e17482-1830-8009-9614-d2b9b1e40879              // pytest
+
+how object is created when you call:
+_____________________________________________
+Student()
+   ↓
+__new__()
+   ↓
+Object is created
+   ↓
+__init__()
+   ↓
+Object is initialized

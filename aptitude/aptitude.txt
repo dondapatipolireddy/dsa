@@ -1,0 +1,237 @@
+https://www.lets-code.co.in/previousyearcodingquestion/deloitte-previous-year-coding-questions/
+https://chatgpt.com/s/w_6ae567980d888191927c3eeaad8be953
+
+he/she/it - does  when use does nothaving (e/es)
+I/you/we/They -  do 
+
+Simple Present Tense:
+Positive sentences:
+-------------------------------------
+	Subject	Verb
+	I / We / You / They	V1
+	He / She / It	V1 + s/es
+
+Negative sentences:
+-----------------------------
+
+	Structure: Subject + do/does + not + V1.
+
+
+
+Simple Past Tense:
+---------------------------------
+
+Structure:
+Sentence type	Structure	Example
+Positive	Subject + V2	He played cricket.
+Negative	Subject + did not + V1	He did not play.
+Question	Did + subject + V1?	Did he play?
+
+***********************Important: After did / did not, use V1.**********************
+________________________________________________________________
+
+simple Future Tense:
+----------------------------------
+1. Sentence structures
+Type	Structure	Example
+Positive	Subject + will + V1	He will play.
+Negative	Subject + will not + V1	He will not play.
+Question	Will + subject + V1?	Will he play?
+*********************Remember: After will, always use V1.****************************
+
+_________________________________________________________________________________________
+
+Simple Present:
+-------------------
+Keywords
+Every day
+Every morning
+Daily
+Always
+Usually
+Often
+Sometimes
+Generally
+Regularly
+Never
+
+7. Present Perfect vs Simple Past
+This difference is very important for placement exams.
+    Simple Past	                |   Present Perfect
+--------------------------------|--------------------------
+I completed the work yesterday.	|   I have completed the work.
+She went to Delhi last week.	|   She has gone to Delhi.
+He ate lunch two hours ago.	|   He has eaten lunch.
+
+
+perfect tense:
+______________________
+
+Present perfect tense → Have/Has
+
+Past perfect tense    → Had
+
+Future perfect tense  → Will have
+
+
+
+Present Perfect Continuous Tense:
+-------------------------------------------------
+Positive:
+Subject + has/have + been + verb-ing
+
+Subject	               Helping verb	Example
+I / We / You / They	have been	They have been studying.
+He / She / It	         has been	He has been studying.
+
+We use this tense when an action:
+- Started in the past.
+- Continued for some time.
+- Is still happening now, or has just stopped.
+
+Examples:
+- I have been studying for two hours.
+- She has been working since morning.
+- They have been playing cricket for an hour.
+important keywords:
+----------------------------
+1.since
+2.for
+
+
+
+Past Perfect Continuous Tense:
+----------------------------------------------
+1. When do we use it?
+We use this tense when an action:
+- Started in the past.
+- Continued for some time.
+- Stopped before another past action or past time.
+Examples:
+1. I had been studying for two hours before my friend arrived.
+2. She had been working there for five years before she resigned.
+3. They had been playing cricket before it started raining.
+
+
+singular: plural
+--------------------
+
+Baby	   Babies
+Foot	   Feet
+Tooth	   Teeth
+Mouse	   Mice
+
+same in singular and plural:
+_______________________________________
+Singular	Plural
+-------------------------------------
+Sheep	        Sheep
+Deer	        Deer
+Fish	        Fish (commonly)
+Aircraft	Aircraft
+Species	        Species
+Series	        Series
+Means	        Means
+News	        News (uncountable)
+Salmon	        Salmon
+Trout	        Trout
+Bison	        Bison
+Swine	        Swine
+Spacecraft	Spacecraft
+Hovercraft	Hovercraft
+Offspring	Offspring
+
+
+7. Incorrect comparisons
+---------------------------------------
+Incorrect: Rahul is more taller than Ram.
+11
+Correct: Rahul is taller than Ram.
+
+Incorrect: She is the most smartest student.
+
+Correct: She is the smartest student.
+
+Do not use double comparison.
+8. Incorrect use of infinitives
+Incorrect: I enjoy to play cricket.
+
+Correct: I enjoy playing cricket.
+
+Incorrect: I want going home.
+
+Correct: I want to go home.
+
+Remember:
+- Enjoy + V-ing.
+- Want + to + V1.
+- Decide + to + V1.
+- Avoid + V-ing.
+- Finish + V-ing.
+
+
+
+| Modal        | Usage                                | Example                      |
+| ------------ | ------------------------------------ | ---------------------------- |
+| Can          | Ability                              | I can swim.                  |
+| Could        | Past ability / Polite request        | I could run fast.            |
+| May          | Permission / Possibility             | May I come in?               |
+| Might        | Weak possibility                     | It might rain today.         |
+| Should       | Advice                               | You should study daily.      |
+| Must         | Strong obligation                    | You must follow the rules.   |
+| Will         | Future action                        | I will attend the exam.      |
+| Would        | Polite request / Imaginary situation | Would you help me?           |
+| Shall        | Offer / Suggestion                   | Shall we start?              |
+| Ought to     | Moral duty / Advice                  | You ought to respect elders. |
+| Need to      | Necessity                            | You need to practice.        |
+| Have to      | External obligation                  | I have to attend class.      |
+| Has to       | External obligation (He/She/It)      | He has to work.              |
+| Had to       | Past obligation                      | I had to leave early.        |
+| Must not     | Prohibition                          | You must not smoke here.     |
+| Need not     | No necessity                         | You need not worry.          |
+| Would rather | Preference                           | I would rather stay home.    |
+| Used to      | Past habit                           | I used to play cricket.      |
+
+
+
+Active voice and Passive voice:
+-----------------------------------------------
+Active voice:
+-------------------
+	When the subject performs the action, the sentence is in Active Voice.
+
+Structure: Subject + Verb + Object
+
+Passive voice:(here object becomes subject)
+--------------------
+	When the object receives the action, the sentence is in Passive Voice.
+
+Structure: Object + Helping Verb + V3 + by + Subject
+
+
+Tense	                         Active Voice	       Passive Voice
+-------------------------------------------------------------------------------------------
+Simple Present	                   V1 / V1+s	        am/is/are + V3
+Simple Past	                       V2	        was/were + V3
+Simple Future	                   will + V1	        will be + V3
+Present Continuous	       am/is/are + V-ing	am/is/are being + V3
+Past Continuous	                was/were + V-ing	was/were being + V3
+Future Continuous	         will be + V-ing	Generally not used
+Present Perfect	                  has/have + V3	        has/have been + V3
+Past Perfect	                     had + V3	          had been + V3
+Future Perfect	                  will have + V3	will have been + V3
+Present Perfect Continuous	has/have been + V-ing	Generally not used
+Past Perfect Continuous	          had been + V-ing	Generally not used
+Future Perfect Continuous	will have been + V-ing	Generally not used
+
+6. Pronoun changes
+
+Activesubject	    Passive form after "by"
+-----------------------------------------------------
+I	                        me
+We	                        us
+He	                        him
+She	                        her
+They	                        them
+You	                        you
+It	                        it

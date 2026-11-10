@@ -1,0 +1,35 @@
+https://chatgpt.com/c/6a80a4ca-fc6c-83e8-9e5e-1a626bd05b76
+https://chatgpt.com/c/6a828d9d-2144-83ee-abf1-d5ff154aefd5
+
+| Meaning       | SQL  |
+| ------------- | ---- |
+| Equal         | `=`  |  OR (IS)
+| Not equal     | `<>` |  #IMPORTANT
+| Not equal     | `!=` |  #IMPORTANT OR(IS NOT)
+| Greater than  | `>`  |
+| Less than     | `<`  |
+| Greater/equal | `>=` |
+| Less/equal    | `<=` |
+
+Why not RANK() for second highest?
+
+Because RANK() skips numbers after a tie. **********important********************
+
+For example:
+
+80,000 → RANK 1
+70,000 → RANK 2
+70,000 → RANK 2
+60,000 → RANK 4
+
+There is no RANK 3.
+
+But DENSE_RANK() does not skip:          **************important**************************
+
+80,000 → 1
+70,000 → 2
+70,000 → 2
+60,000 → 3
+
+
+21,22,23 questions(refer once)

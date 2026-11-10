@@ -1,0 +1,607 @@
+OS CONCEPTS : https://chatgpt.com/c/6a25666f-ea08-8321-acad-a9c9dfa3f6ce
+NETWORKING : https://chatgpt.com/c/6a49f213-39d4-83e8-b7a6-79ef90a338d1
+
+OPERATING SYSTEM: “An Operating System is system software that acts as an interface between
+ the user and hardware. It manages resources such as CPU, memory, files, and devices, and
+ provides an environment for applications to run.”
+
+
+1.PROGRAM :-
+	IS THE COLLECTIONS OF INSTRUSTIONS THAT ARE STORED IN HARDDISK (OR) SSD.
+2.PROCESS:
+	IS THE RUNNING INSTANCE OF PROGRAM IS CALLED PROCESS.
+
+PROCESS LIFE CYCLE:
+	
+
+
+
+
+
+
+
+FIVE STATES:
+1.NEW : IN THESE OS ASSIGNED THE PCB(PROCESS CONTROL BLOCK) TO PROGRAM.SO HERE PROGRAM BECOMES PROCESS
+2.READY : IN THESE PROCESSS ARE IN QUEUE FOR CPU INITILIZATION.HERE ALL ARE INITIALIZED COMPLETELY REQUIRED RESOURCES. * ALLOCATES MEMORY
+	    * REQUIRED RESOURCES
+	    * REGISTERS  etc....
+3.RUNNING : * CPU IS INITIALIZED THE PROCESS
+	    
+4.WAITING : HERE PROCESS IS WAITING FOR I/0 FROM EXTERNAL SOURCES LIKE KEYBOARD,MOUSE,PRINTER,SCANNER.
+5.TERMINATED : HERE TASK IS COMPLICATED AND RELEASES THE ALLOCATED RESOURCES TO THAT PROCESS.
+
+PROCESS RESOURCES
+________________________________
+
+1.PROCESS ID(PID): AUTOMATICALLY ID IS ASSIGNED TO PROCESS.IT IS (UNIQUE)
+2.PROGRAM CODE(TEXT SEGMENT) : IT IS SOURCE CODE
+3.DATA SEGMENT : IT STORES GLOBAL AND STATIC DATA
+4.HEAP MEMORY : IT STORES DATA WHEN THEY ARE EXECUTING
+5.STACK MEMORY : HERE STORES LOCAL AND FUCTIONS INFORMATION
+6.SCHEDULING INFORMATION : TIME SLICING,
+7.CPU REGISTERS : 
+	*IT IS VERY SMALL AND VERY FAST EXECUTABLE LOCATIONS 
+8.FILES
+
+PROCESS CONTROL BLOCK(PCB):
+
+| **PCB Field**                        | **One-Line Explanation**                                                                                       |
+| ------------------------------------ | -------------------------------------------------------------------------------------------------------------- |
+| **Process ID (PID)**                 | A unique number assigned by the OS to identify a process.                                                      |
+| **Process State**                    | Stores the current state of the process (New, Ready, Running, Waiting, or Terminated).                         |
+| **Program Counter (PC)**             | Stores the address of the next instruction the CPU will execute.                                               |
+| **CPU Registers**                    | Stores the current values of CPU registers so the process can resume correctly after a context switch.         |
+| **CPU Scheduling Information**       | Stores scheduling details like priority, time slice, and queue information used by the CPU scheduler.          |
+| **Memory Management Information**    | Stores information about the process's memory, such as page tables, base/limit registers, or memory map.       |
+| **Accounting Information**           | Stores resource usage details like CPU time, process creation time, and user ID for monitoring and accounting. |
+| **I/O Status Information**           | Stores information about the process's open files, I/O devices, and pending I/O operations.                    |
+| **Parent/Child Process Information** | Stores the IDs and relationships of the parent process and any child processes.     
+
+
+| Ready                              | Waiting                              |
+| ---------------------------------- | ------------------------------------ |
+| Waiting for CPU                    | Waiting for an event/I/O             |
+| Can run as soon as CPU is assigned | Cannot run until the event completes |
+
+
+Q7. Is PCB stored in RAM or Disk?
+
+Answer:
+PCB is stored in RAM, specifically in the kernel's memory, because the OS needs fast access to it.     
+
+Q: Does a child process have its own PCB?
+
+Answer:
+Yes. Every process, including parent and child processes, has its own Process Control Block (PCB).
+The child's PCB stores its own PID, state, program counter, registers, memory information, scheduling information, and also contains
+the Parent PID to identify its parent process.                      |
+
+Q: Is the PCB of a child process different from the parent's PCB?
+
+Answer:
+The PCB format is the same, but the contents are different. Each process has its own unique PID, process state, program counter, CPU registers, scheduling 
+information, and memory information. The parent PCB stores references to its children, while the child PCB stores the PID of its parent.
+
+Interview Question
+
+Q.Why is Process called Active?
+
+Because
+
+✔ CPU executes it
+
+✔ Memory allocated
+
+✔ Registers allocated
+
+✔ Stack allocated
+
+✔ Resources allocated
+____________________________________________________________________________________________________________________________________
+
+
+Thread:
+	DEF: A thread is a lightweight process that executes independently while sharing the resources of its process.
+					(or)
+	A Thread is the smallest unit of execution inside a process.A process may contain one or more threads.
+
+EXAMPLE:
+
+	Google Chrome
+
+	One Chrome process contains
+
+	Thread 1 → UI
+	Thread 2 → Rendering webpage
+	Thread 3 → Network
+	Thread 4 → Audio
+	Thread 5 → JavaScript execution
+
+	All work simultaneously.
+
+| Process                    | Thread                    |
+| -------------------------- | ------------------------- |
+| Heavyweight                | Lightweight               |
+| Independent program        | Small execution unit      |
+| Own memory                 | Shares memory             |
+| Own PCB                    | Own TCB                   |
+| Context switching is slow  | Context switching is fast |
+| Communication is difficult | Communication is easy     |
+| Process creation is slow   | Thread creation is fast   |
+| Higher memory              | Lower memory              |
+
+
+| User-Level Thread              | Kernel-Level Thread       |
+| ------------------------------ | ------------------------- |
+| Managed by user library        | Managed by OS             |
+| Fast creation                  | Slower creation           |
+| Fast switching                 | Slower switching          |
+| Kernel unaware                 | Kernel aware              |
+| If one blocks → all block      | Others continue           |
+| Cannot fully utilize multicore | Can run on multiple cores |
+
+
+THREADS SHARED:
+_________________
+1.PROCESS ID 
+2.CODE
+3.GLOBAL VARIBALES
+4.HEAP MEMORY
+5.OPEN FILES
+6.SOCKETS
+
+NOT SHARED:
+_____________________
+1.PROGRAM COUNTER
+2.THREAD STATE
+3.STACK
+4.REGISTERS
+
+
+STATES OF THREAD:
+New
+
+↓
+
+Ready
+
+↓
+
+Running
+
+↓
+
+Waiting
+
+↓
+
+Ready
+
+↓
+
+Terminated
+
+
+MULTITHREADING:
+______________________
+
+Multithreading is the execution of multiple threads within the same process concurrently, improving responsiveness and CPU utilization.
+
+ADVANTAGES:
+___________________________________
+1.BETTER CPU UTILIZATION
+2.RESOURCE SHARING
+3.EASY COMMUNICATION
+4.FASTER EXECUTION
+
+DISADVANTAGES:
+___________________________________________
+1.RACECONDITION
+2.DEADLOCK
+3.STARVATION
+4.SYNCHRONIZATION COMPLEXITY
+1. What are thread models?
+
+Answer:
+Thread models define how user-level threads are mapped to kernel-level threads.
+
+2. Name the three thread models.
+
+Answer:
+
+Many-to-One
+One-to-One
+Many-to-Many
+3. Which thread model is the fastest?
+
+Answer:
+Many-to-One has the lowest overhead because only one kernel thread is managed.
+
+4. Which thread model supports multicore processors?
+
+Answer:
+One-to-One and Many-to-Many support multicore processors because multiple kernel threads can execute simultaneously.
+
+5. Which thread model is used by Linux and Windows?
+
+Answer:
+The One-to-One model.
+
+6. What is the disadvantage of the Many-to-One model?
+
+Answer:
+If one thread performs a blocking operation, the entire process blocks because all user threads share a single kernel thread.
+
+7. Which thread model is more complex?
+
+Answer:
+The Many-to-Many model because it requires dynamic mapping between user threads and kernel threads.
+
+8. Why is the One-to-One model popular?
+
+Answer:
+
+Supports true parallelism.
+Better responsiveness.
+Efficient scheduling by the operating system.
+Ideal for multicore processors.
+
+
+__________________________________________________________________________________________________________________________________
+-----------CPU SCHEDULING: https://chatgpt.com/c/6a41e444-d660-83e8-b26b-a421c2d15fdb
+
+CONVEY EFFECT:
+In FCFS, a long process at the front of the queue forces all shorter processes to wait, increasing the average waiting time.
+
+Interviewer:
+
+CPU SCHEDULING MEANS:
+CPU scheduling is the process by which the operating system selects one process from the ready queue and allocates the CPU to it. It is needed because multiple processes may be waiting
+for the CPU, but only one can execute at a time. Good scheduling improves CPU utilization, throughput, and response time.
+
+Which scheduling algorithm is used in modern operating systems?
+
+Answer:
+
+Modern operating systems do not use a single algorithm. They combine multiple techniques, such as priority scheduling, Round Robin,
+ and multilevel feedback queues, depending on the workload.
+
+SCHEDULING ALGORITHEMS:
+1.FCFS(FIRST COME FIRST SERVE)
+2.SJF(SHORTEST JOB FIRST)
+3.SRTF(SHORTEST REMAINING TIME FIRST)
+4.PRIORITY SCHEDULING
+5.ROUND ROBIN ==============================(TIME QUANTUM)
+__________________________________________________________________________________________________________________________________
+DEADLOCK: https://chatgpt.com/c/6a43ee49-2f28-83e8-a5c7-26a4a46147e7
+DEADLOCK:
+	A deadlock occurs when every process is waiting for another process to release a resource, so none of them can continue.
+EXAMPLE:
+------------------------------
+P1                          |
+Has Printer                 |
+Waiting for Scanner         |
+                            |
+P2                          |
+Has Scanner		    |
+Waiting for Printer	    |
+-----------------------------
+COFFMAN CONDITIONS:
+________________________
+1.MUTUAL EXCLUSION:
+	IT ALLOWS THE RESOURCE TO USE ONE PROCESS AT A TIME.
+2.HOLD AND WAIT:
+	HOLD ONE RESOURCE AND WAIT FOR ANOTHER RESOURCE WHICH IS IN USE.
+3.NO PREMETIVE:
+	EVENTUALLY NOT TAKING THE RESOURCE FROM PROCESS AND ALLOCATING THE RESOURCE TO OTHER PROCESS.
+4.CIRCULAR WAIT
+	RESOURCES ARE WAITING IN A CIRCULAR CHAIN.
+
+DEADLOCK STOP:
+_____________________________________________
+4 METHODS
+1.IGNORE: "The Ignore approach assumes deadlocks occur infrequently, so the operating system does not implement any special mechanism to
+		 handle them."
+2.PREVENT: BREAK ATLEAST ONE COFFMAN CONDITION
+3.AVOID : CHECK'S STATE IF ALLOCATE THE REQUEST RESOURCES IF SYSTEM IN SAFE STATE OR NOT (BANKER'S ALGORITHEM) 
+4.DETECTION AND RECOVER : 
+	Instead of preventing or avoiding:
+	Allow deadlocks to occur.
+	Detect them.
+	Recover by:
+		Terminating one or more processes.
+		Preempting resources.
+		Rolling back processes to a safe state.
+
+Q1. What is the Ignore approach?
+Answer:The Ignore approach *********(Ostrich Algorithm)******** assumes deadlocks are rare and does not attempt to prevent, avoid, or detect them. 
+If a deadlock occurs, it is resolved manually, such as by terminating the affected process or restarting the system.
+
+Q2. Why do operating systems ignore deadlocks?
+Answer:Because continuously checking for deadlocks introduces overhead. Since deadlocks are relatively rare in many workloads, ignoring them 
+can improve overall system performance.
+
+Q5. Difference between deadlock and starvation?
+Answer: In a deadlock, processes wait for each other forever. In starvation, a process waits indefinitely because other processes
+keep getting the resource.
+
+Q8. What is Banker's Algorithm used for?
+Answer: It is a deadlock avoidance algorithm that grants resources only if the system remains in a safe state.
+
+Q9. Why is it called Banker's Algorithm?
+Answer: Like a bank approving loans only when it can satisfy all customers eventually, the OS allocates resources only if it can
+ guarantee safe completion.
+
+Q10. Which is better: prevention or avoidance?
+Answer: Prevention is simpler but can reduce resource utilization. Avoidance is more efficient but requires additional checks and 
+knowledge of maximum resource needs.	
+__________________________________________________________________________________________________________________________________________
+
+MEMORY MANAGEMENT: https://chatgpt.com/c/6a43ee49-2f28-83e8-a5c7-26a4a46147e7
+
+MEMORY MANAGEMENT:
+________________________________________________
+
+	MEMORY MANAGEMENT IS THE OS FUNCTION THAT ALLOCATES,TRACKING,PROTECTING AND FREEING MAIN MEMORY FOR PROCESSES.
+
+WHAT IS THE NEED:
+___________________________
+1. TWO PROCESSES MAY OVERRIDE EACH OTHER'S DATA
+2. MEMORY GETS WASTED
+3. CPU NOT GETS THE REQUIRED DATA EFFECIENLTY 
+4. PROGRAMS MAY CRASH DUE TO INSUFFICIENT OR FRAGEMENTED MEMORY
+
+RESPONSIBILITIES:
+_________________________________________
+1.ALLOCATING
+2.TRACKING
+3.PROTECTING
+4.FREEING
+5.SUPPORTS VIRTUAL MEMORY
+6.IMPROVE CPU UTILIZATION
+
+LOGICAL ADDRESS:
+___________________________
+
+	THE ADDRESS WHICH ARE GENERATED BY CPU WHILE A PROGRAM IS EXECUTING.IT IS NOT AN ACTUAL ADDRESS IN RAM.THE (MEMORY MENAGEMENT UNIT)
+ WHICH TRANSLATES LOGICAL ADDRESS INTO PYHSICAL ADDRESS BEFORE ACCESSING THE MEMORY.
+
+PHYSICAL ADDRESS:
+_________________________________
+	THE PHYSICAL ADDRESS IS THE REAL ADDRESS IN RAM WHERE DATA IS STORED.
+
+
+| Logical Address                    | Physical Address                       |
+| ---------------------------------- | -------------------------------------- |
+| Generated by the CPU               | Generated by the MMU after translation |
+| Also called Virtual Address        | Also called Real Address               |
+| Used by the program                | Used by RAM (memory hardware)          |
+| May be different from RAM location | Actual location in RAM                 |
+
+
+INTERNAL FRAGMENTATION:
+____________________________________
+Answer: Wasted space inside an allocated memory block, commonly seen with paging.
+
+EXTERNAL FRAGMENTATION:
+_________________________________________
+Answer: Free memory exists but is scattered into small non-contiguous blocks, making it impossible to allocate a large contiguous block.
+It commonly occurs with segmentation and contiguous memory allocation.
+
+Q17. What is thrashing?
+
+Answer: Thrashing occurs when the system spends most of its time handling page faults and swapping pages instead of executing processes.
+
+| Paging                        | Segmentation                     |
+| ----------------------------- | -------------------------------- |
+| Fixed-size pages              | Variable-size segments           |
+| Physical division             | Logical division                 |
+| No external fragmentation     | External fragmentation exists    |
+| Internal fragmentation exists | Little/no internal fragmentation |
+| Not visible to programmer     | Visible to programmer            |
+| Uses page table               | Uses segment table               |
+
+TYPES OF ALLOCATION:
+TWO TYPES:
+1. CONTINUOUS ALLOCATION:
+_________________________________-
+	THE MEMORY BLOCKS ARE ALLOCATED IN CONTINUOSS MANNER.
+2. NON-CONTINUOUS ALLOCATION:
+_________________________________
+	Process divided into multiple pieces.
+
+	Stored anywhere.
+
+	Examples
+
+		Paging
+		Segmentation
+
+
+page Table:
+____________________
+
+	IT'S MAP BETWEEN PAGES(LOGICAL ADDRESS CONTINUOUS NUMBERS) TO FRAMES(PHYSICAL ADDRESS NOT CONTINUOUS).
+
+STRUCTURE OF PAGETABLE:
+| Page | Frame |
+| ---- | ----- |
+| 0    | 5     |
+| 1    | 2     |
+| 2    | 8     |
+| 3    | 1     |
+
+
+Address Translation
+__________________________________
+Logical Address = Page Number + Offset
+
+↓
+
+Page Table
+
+↓
+
+Frame Number
+
+↓
+
+Physical Address
+_____________________________________________________________________________________________________
+virtual memory:
+	Virtual memory allows programs larger than RAM to execute by using disk space as an extension of physical memory.
+page fault:
+	A page fault occurs when a required page is not present in RAM, causing the OS to load it from disk.
+swapping:
+	Swapping is the process of moving an entire process between RAM and disk to free memory.
+
+________________________________________________________________________________________________________________________
+| Swapping                    | Paging                  |
+| --------------------------- | ----------------------- |
+| Moves entire process        | Moves individual pages  |
+| Higher overhead             | Lower overhead          |
+| Used for process management | Used for virtual memory |
+
+
+
+
+ 
+_______________________________________________________________________________________________________________________________________
+Q10. What is FIFO page replacement?
+Answer: FIFO replaces the page that has been in memory the longest.
+
+Q11. What is LRU?
+Answer: LRU replaces the page that has not been used for the longest time in the past.
+
+Q12. What is the Optimal page replacement algorithm?
+Answer: Optimal replaces the page that will not be used for the longest time in the future. It gives the minimum page faults but is not practical because future memory accesses are unknown.
+
+Q13. Which page replacement algorithm is best?
+Answer: The Optimal algorithm has the fewest page faults theoretically. In practice, LRU is widely used because it approximates Optimal without requiring future knowledge.
+
+Q14. What is Belady's anomaly?
+Answer: Belady's anomaly is the phenomenon where increasing the number of page frames causes more page faults. It can occur with FIFO but not with LRU or Optimal.
+_________________________________________________________________________________________________________________________________________________________________________________________
+FILE SYSTEM: 
+disk sheduling:https://chatgpt.com/c/6a25666f-ea08-8321-acad-a9c9dfa3f6ce
+_______________________________________________________________________________________________________________________________________________________________________________________
+
+INTER PROCESS COMMUNICATION: https://chatgpt.com/c/6a8a69fd-4654-83e8-aae8-6c1e9d1db4fd
+
+	IPC (Inter-Process Communication) means the mechanisms provided by the operating system that allow two or more processes to exchange data and coordinate with each other.
+
+Common IPC mechanisms:
+	1.Shared Memory
+	2.Message Passing
+	3.Pipe
+	4.Named Pipe (FIFO)
+	5.Socket
+
+1.Shared Memory → Processes communicate by accessing the same memory area.
+2.Message Passing → Processes communicate by sending and receiving messages.
+3.Pipe = mainly communication between related processes on the same machine.
+4.Socket = communication between processes, including processes on different machines over a network.
+
+1. Shared Memory:
+	In shared memory, the OS creates a memory region that multiple processes are allowed to access.
+	 Process A
+           ↓
+           ↕
+    +----------------+
+    | Shared Memory  |
+    +----------------+
+           ↕
+           ↑
+        Process B
+
+For example:
+
+Mutex
+Semaphore
+Locks
+
+Otherwise, race conditions can occur.
+
+2. Message Passing
+	In message passing, processes don't directly access each other's memory.
+	INSTEAD COMMUNICATE:
+		1.send()
+		2.receive()
+
+conceptually:
+
+Process A
+   
+   | send("Hello")
+   ↓
++----------------+
+| Message System |
++----------------+
+   |
+   | receive()
+   ↓
+Process B
+
+pipe:
+____________
+A pipe is an IPC mechanism where one process writes data into a pipe and another process reads that data.
+
+Think of it like a one-way communication channel:
+
+Process A
+   |
+   | write()
+   ↓
++-----------+
+|   PIPE    |
++-----------+
+   |
+   | read()
+   ↓
+Process B
+-------------------------------------------------------------------------------------------------
+Anonymous Pipe : Usually used between related processes.
+ex:
+	Parent
+  	↓	
+	Pipe
+  	↓
+	Child
+--------------------------------------------------------------------------------------------------------
+Named Pipe : A Named Pipe, also called FIFO, has a name in the filesystem.
+Anonymous Pipe
+      ↓
+Related processes
+      ↓
+Usually same machine
+
+
+Named Pipe
+      ↓
+Processes can be unrelated
+      ↓
+Usually same machine
+
+
+Socket
+      ↓
+Same machine OR different machines
+      ↓
+Excellent for client-server communication
+_______________________________________________________________________________________________________________
+
+2. What is a Socket?
+
+A socket is an endpoint for communication between processes.
+
+ex:	
+	Process A
+   	   |
+	Socket
+           |
+	Network
+           |
+	Socket
+           |
+	Process B
+_____________________________________________________________________________________________________________________________________________

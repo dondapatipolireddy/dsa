@@ -1,0 +1,323 @@
+https://chatgpt.com/c/6a76933b-1d68-83ee-bce9-ca2116d4abdf
+https://chatgpt.com/c/6a76933b-1d68-83ee-bce9-ca2116d4abdf
+
+____________________________________________________________________
+| `slice()`               | `splice()`                             |
+| ----------------------- | -------------------------------------- |
+| Doesn't modify original | Modifies original                      |
+| Extracts elements       | Adds/removes/replaces                  |
+| Returns copied portion  | Returns removed elements               |
+| `slice(start, end)`     | `splice(start, deleteCount, items...)` |
+
+****************JavaScript Fundamentals — MUST KNOW******************************
+1. var, let, const
+2. Data types
+ String
+ Number
+ Boolean
+ Undefined
+ Null
+ Symbol
+ BigInt
+ Object
+3.Primitive vs Reference types
+4.Type conversion
+5.Type coercion
+6.==(only value) vs === (type and value)
+7.!=(type coercion(implicity converts)) or !==(direct comparision no comparision)
+7.Truthy and falsy values
+8.Operators
+9.Template literals
+10.typeof
+__________________________________________________________________________________________________
+1.var, let, and const are used to declare variables in JavaScript. The main differences are their scope, 
+ redeclaration, reassignment, and hoisting behavior.
+
+2.var is function-scoped and allows both redeclaration and reassignment. let is block-scoped, allows reassignment 
+but does not allow redeclaration in the same scope. const is also block-scoped and does not allow reassignment or redeclaration.
+
+*************************Function Scope vs Block Scope*******************
+
+DEF: A variable is function-scoped if it can be accessed anywhere inside the function where it is declared.
+
+EXAMPLE:
+function test() {
+    var x = 10;
+
+    if (true) {
+        console.log(x); // 10
+    }
+
+    console.log(x); // 10
+}
+
+test();
+
+console.log(x); // Error
+---------------------------------------------------------------------------------
+ Block Scope:A variable is block-scoped if it can only be accessed inside the { } block where it is declared.
+function test() {
+    if (true) {
+        let x = 10;
+        const y = 20;
+
+        console.log(x); // 10
+        console.log(y); // 20
+    }
+
+    console.log(x); // Error
+    console.log(y); // Error
+}
+------------------------------------------------------------------------------------------------------------------
+3.let and const are affected by the Temporal Dead Zone, whereas var is initialized as undefined when hoisted. In modern JavaScript, I generally use const by default and let when I need to reassign a value.
+__________________________________________________
+var → function scope + redeclare + reassign
+let → block scope + reassign
+const → block scope + no reassign
+____________________________________________________
+
+In JavaScript, hoisting means variable and function declarations are processed before the code executes.
+
+_____________________________________________________________________________________________________________________________________________________
+**********************************___________TYPE CONVERSION________________******************************************************
+
+DEF: Type conversion means explicitly changing one data type into another.
+It is done intentionally by the developer.
+Common methods:
+Number()
+String()
+Boolean()
+parseInt()
+parseFloat()
+Example:
+let x = "10";
+let y = Number(x);
+"10" → 10
+This is explicit conversion.
+**************************************_________TYPE COERCION___________**********************************************************
+
+DEF: Type coercion means JavaScript automatically converts one type into another.
+It happens implicitly during an operation or comparison.
+The developer doesn't explicitly perform the conversion.
+Example:
+let x = "10";
+let y = x - 2;
+JavaScript automatically converts "10" → 10.
+Result: 8
+This is implicit coercion.
+_____________________________________________________________________________________________________
+
+***********************************************TEMPLATE LITERALS***************************************************
+
+Template literals are a feature introduced in ES6 that allows us to create strings using backticks (). They make it
+ easy to insert variables and expressions directly into a string using ${}`. They also support multi-line strings.
+
+________________________________________________________________________________________________________________
+___________ Truthy and Falsy Values :javaScript converts values to Boolean in conditions.
+********falsy values*******
+false
+0
+-0
+0n
+""
+null
+undefined
+NaN
+*********truvalues*****************************
+"hello"   // true
+"0"       // true
+[]        // true
+{}        // true
+42        // true
+-1        // true
+
+________________________________________________________________________________________________________________
+
+__________________!= — Loose Not Equal_____________________
+***************************Compares values after *******type coercion.**********
+JavaScript may convert one type to another.
+
+__________________!== — Strict Not Equal____________________
+Compares value AND type.
+*************************Does not perform type coercion.*******************
+
+__________________________________________________________________________________________________________________
+
+typeof {}              // "object" (Plain object)
+typeof []              // "object" (Array)
+typeof new Date()      // "object" (Date object)
+typeof /abc/           // "object" (Regular expression)
+typeof new Map()       // "object" (Map)
+typeof null            // "object" (A famous, legacy bug in JavaScript)  ************important***************
+
+In the very early implementation of JavaScript, values were represented internally using type tags. The type tag 
+used for objects was 0.
+In the very early implementation of JavaScript, values were represented internally using type tags. The type tag used for objects was 0.
+_______________________________________________________________________________________________________________________________________
+SYNCHRONOUS JAVASCRIPT:
+-------------------------------
+Synchronous JavaScript executes code sequentially, where each operation must finish before the next operation starts.
+
+ASYNCHRONOUS JAVASCRIPT:
+-----------------------------
+Asynchronous means JavaScript can start an operation and continue executing other code without waiting for that operation to finish.
+						(OR)
+Asynchronous JavaScript allows certain operations, such as timers, network requests, and file operations, to proceed without blocking the 
+execution of other JavaScript code.
+
+CALL STACK:
+--------------
+The Call Stack is a data structure used by JavaScript to keep track of function calls and execute synchronous JavaScript code.
+
+
+setTimeout() doesn't sit inside the Call Stack for 2 seconds.
+The runtime provides APIs to handle asynchronous operations.
+In a browser, these are commonly called Web APIs.
+
+In Node.js, asynchronous operations are handled through Node.js runtime APIs, backed by components such as libuv.
+EVENT LOOPS:
+-----------------
+The Event Loop coordinates the Call Stack and asynchronous task queues. When the Call Stack becomes empty, pending microtasks are processed
+, and then eligible tasks such as timer callbacks can be moved to the Call Stack for execution. This allows JavaScript to handle 
+asynchronous operations without blocking the main execution thread.
+
+_______________________________________________________________________________________________________________________
+8. Callback Queue / Task Queue
+
+EXAMPLE:
+
+setTimeout(() => {
+    console.log("B");
+}, 0);
+
+Even with 0 milliseconds, it does not execute immediately.
+
+The timer is handled by the runtime.
+
+Once the timer is ready, its callback is placed into the task queue (often called the callback queue).
+
+setTimeout
+    ↓
+Runtime timer
+    ↓
+Task / Callback Queue
+
+The callback waits there until the Call Stack is empty and the event loop allows it to run.
+________________________________________________________________________________________________________________________________
+Microtask Queue — Interview Definition
+
+The Microtask Queue is a queue that stores small asynchronous callbacks, such as Promise .then(), .catch(), .finally(), and
+queueMicrotask(), that are executed after the current synchronous code finishes and before the next task from the task/callback queue.
+
+_______________________________________________________________________________________________________________________________________
+
+A Promise is an object used to handle the eventual success or failure of an asynchronous operation. It has three states: pending, 
+fulfilled, and rejected.
+
+EXAMPLE:::::::::::::::
+-------------------------------------------------
+fetch("/users")
+    .then(data => console.log(data))
+    .catch(error => console.log(error))
+    .finally(() => {
+        console.log("Request completed");
+    });
+-------------------------------------------------
+.then() is used to handle the fulfilled result of a Promise.
+.catch() is used to handle a rejected Promise or errors that occur in the preceding Promise chain.
+.finally() executes after a Promise settles, regardless of whether it was fulfilled or rejected.
+___________________________________________________________________________________________________________________________________________
+                     ---------------------------------ASYNC/AWAIT---------------------------------------------
+
+"Async/await is a modern way of handling Promises in JavaScript. The async keyword makes a function return a Promise, and the await keyword
+ waits for a Promise to settle inside an async function, allowing asynchronous code to be written in a more readable, synchronous-looking 
+way. We can use try...catch to handle errors."
+
+STRUCTURE:------------------------------------
+
+async function getUsers() {
+    try {
+        const response = await fetch("/users");
+        const data = await response.json();
+
+        console.log(data);
+    } catch (error) {
+        console.log(error);
+    }
+}
+__________________________________________________________________________________________________________________________________________
+
+
+| Method                 | Success condition    | If one rejects?                                |
+| ---------------------- | -------------------- | ---------------------------------------------- |
+| `Promise.all()`        | All fulfill          | Rejects                                        |
+| `Promise.allSettled()` | Waits for all        | Doesn't reject because of an input rejection   |
+| `Promise.race()`       | First settled wins   | Rejection can win                              |
+| `Promise.any()`        | First fulfilled wins | Ignores individual rejections until all reject |
+
+____________________________________________________________________________________________________________________________________________
+
+DOM:
+   The DOM is a programming interface that represents an HTML document as a tree of objects, allowing JavaScript to access and modify the 
+page structure, content, and events.
+
+JavaScript can use the DOM to:
+
+Find HTML elements
+Change text
+Change styles
+Create elements
+Remove elements
+Handle events
+_____________________________________________________________________________________________
+
+LEXICAL SCOPE:
+
+Lexical scope means scope is determined by where the code is written, not where the function
+is called.
+__________________________________________________________________________________________________________
+
+“Both Spread and Rest operators use three dots ..., but they work differently. 
+SPREAD:
+-------------------
+The Spread operator expands or unpacks elements from an array or properties from an object. 
+
+REST:
+------------
+The Rest operator collects multiple values into a single array. So, Spread means expand, while Rest means collect.”
+_______________________________________________________________________________________________
+
+LEXICAL SCOPE:
+
+        Lexical scope means a variable's accessibility is determined by where it's physically
+ written in the code — not by how or where the function is called. JavaScript figures this 
+out at the time the code is written (compile time), not at runtime.
+
+In simple terms: inner functions can access variables from their outer (parent) functions, 
+because of where they're nested in the code.
+-------------------------------------------------------------------------------------------
+
+SCOPE CHAIN:
+
+If a variable isn't found in the current scope, JS looks outward, one level at a time, until
+ it reaches the global scope.
+
+______________________________________________________________________________________________________________________________________
+
+****************************HOSITING***********************************
+
+Hoisting is JavaScript's behavior where declarations are processed during the creation phase before the code is executed. With var, the variable is 
+initialized as undefined, so it can be accessed before its declaration. let and const are also hoisted but remain in the Temporal Dead Zone until their 
+declaration is reached.
+
+___________________________________________________________________________________________________________________________________________________
+
+EVENT PROPAGATION:
+	Event propagation is the process by which an event travels through the DOM from the outermost element to the target and then back upward.
+
+| Bubbling          | Capturing           |
+| ----------------- | ------------------- |
+| Child → Parent    | Parent → Child      |
+| Default behavior  | Must enable capture |
+| `false` / omitted | `true`              |
+| Commonly used     | Less commonly used  |

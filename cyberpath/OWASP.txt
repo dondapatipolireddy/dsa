@@ -1,0 +1,75 @@
+https://chatgpt.com/c/6a81e381-7374-83ee-9abc-d66c88a7a92d
+
+OWASP ZAP:
+	OWASP = Open Worldwide Application Security Project.
+		It is a nonprofit organization that provides resources, standards, tools, and guidance for web application security.
+
+	ZAP = Zed Attack Proxy.
+		It is an open-source web application security testing tool.
+
+
+
+| Rank | Vulnerability                         |
+| ---- | ------------------------------------- |
+| A01  | Broken Access Control                 |
+| A02  | Security Misconfiguration             |
+| A03  | Software Supply Chain Failures        |
+| A04  | Cryptographic Failures                |
+| A05  | Injection                             |
+| A06  | Insecure Design                       |
+| A07  | Authentication Failures               |
+| A08  | Software or Data Integrity Failures   |
+| A09  | Security Logging & Alerting Failures  |
+| A10  | Mishandling of Exceptional Conditions |
+
+	
+********************9. XSS — Cross-Site Scripting***********************************************
+
+XSS occurs when an attacker manages to make malicious JavaScript execute in another user's browser.
+
+Example
+
+Suppose a website displays:
+
+Welcome <username>
+
+without safely handling the input.
+
+An attacker submits malicious HTML/JavaScript.
+
+The browser may interpret it as code.
+
+Types of XSS
+
+There are three major types:
+
+1. Stored XSS
+
+Malicious input is stored on the server/database.
+
+Attacker
+   ↓
+Comment
+   ↓
+Database
+   ↓
+Victim opens page
+   ↓
+Script executes
+2. Reflected XSS
+
+The malicious input is immediately reflected in the response.
+
+Attacker → malicious URL → Server → Victim
+3. DOM-based XSS
+
+The vulnerability exists in client-side JavaScript/DOM manipulation.
+
+Prevention
+Output encoding
+Proper HTML sanitization where appropriate
+Avoid unsafe DOM APIs
+Use Content Security Policy
+Validate input where appropriate
+________________________________________________________________________________________________________________________________
+

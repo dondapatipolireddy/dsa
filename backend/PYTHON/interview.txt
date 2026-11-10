@@ -1,0 +1,29 @@
+1.Everything explain with example
+
+Quick Memory Trick
+📋 List → Things that change (shopping cart, tasks, playlist)
+🔒 Tuple → Things that stay fixed (coordinates, RGB color, dates)
+⭐ Set → Unique things only (unique emails, tags, permissions)
+📖 Dictionary → Lookup information (ID → Name, Word → Count, Product → Price)
+
+1. What is Recursion?
+
+Interview answer:
+
+Recursion is a technique where a function calls itself to solve a problem by breaking it 
+into smaller subproblems. It must have a base condition to stop the calls.
+
+2. Stack vs Heap ⭐⭐⭐
+
+Interview answer
+
+Stack is used mainly for function calls, local variables, and execution management, while
+heap is used for dynamically allocated objects and data.
+
+| Stack                                  | Heap                                        |
+| -------------------------------------- | ------------------------------------------- |
+| Used for function calls and local data | Used for dynamically allocated data/objects |
+| Generally faster                       | Generally comparatively slower              |
+| Automatically managed                  | Managed by runtime/allocator                |
+| Smaller memory area typically          | Usually larger memory area                  |
+| Follows stack/LIFO behavior            | No LIFO requirement                         |

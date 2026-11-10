@@ -1,0 +1,205 @@
+Flask:
+_____________
+DEF: flask is a LIGHTWEIGHT python web framework used to develop WEBAPPLICATIONS,WEBPAGES and RESTAPI'S.
+	it's allows to handle http requests.
+	it's allows database connections.
+
+Q.Why Flask is called a “micro-framework”
+
+	Flask provides only the essentials:
+
+	1.Routing (URLs)
+	2.Request handling
+	3.Response handling
+	4.Templates (HTML rendering)
+	5.Basic session support
+
+	It does not force you to use a specific database, authentication system, or project structure. 
+
+__________________________________________________________________________________________________________________________________
+| Feature           | Flask                           | Django                                                  |
+| ----------------- | ------------------------------- | ------------------------------------------------------- |
+| Learning curve    | Easier                          | Steeper                                                 |
+| Size              | Lightweight (micro-framework)   | Full-featured framework                                 |
+| Flexibility       | Very flexible                   | More opinionated                                        |
+| Built-in features | Minimal                         | Authentication, ORM, Admin panel, Forms, Security, etc. |
+| Performance       | Slightly faster for small apps  | Excellent for large applications                        |
+| Best for          | APIs, microservices, prototypes | Large web applications, enterprise projects             |
+_______________________________________________________________________________________________________________________________________
+
+Routing:
+________________________
+  Routing is the mechanism in Flask that maps a URL to a Python function using the -------@app.route() -----decorator.
+
+What is @app.route()?
+A decorator tells Flask:
+
+"When someone visits this URL, execute the following function."
+
+IT IS TWO TYPES:
+_______________________________________
+
+1.STATIC ROUTING : HERE URL IS FIXED (OR) NOT CHANGED:
+
+	EX:
+		@app.route("/about")
+		def about():
+    			return "About"
+
+2.DYNAMIC ROUTING : ACCEPTS VALUES FROM THE URL.
+
+	EX:
+		@app.route("/student/<name>")
+		def student(name):
+			return f"Roll Number {name}"
+
+3.MULTIPLE DYNAMIC ROUTING: ACCEPTS MULTIPLE VALUES FROM THE URL.
+
+	EX: 
+		@app.route("/add/<int:a>/<int:b>")
+		def add(a, b):
+    			return str(a + b)
+
+--> Route Converters
+	Flask can automatically convert URL values to different data types.
+
+| Converter       | Description       | Example                                       |
+| --------------- | ----------------- | --------------------------------------------- |
+| `<string:name>` | Text (default)    | `/user/Ram`                                   |
+| `<int:id>`      | Integer           | `/product/101`                                |
+| `<float:price>` | Decimal number    | `/price/99.99`                                |
+| `<path:file>`   | Path with slashes | `/docs/folder/file.txt`                       |
+| `<uuid:id>`     | UUID value        | `/order/123e4567-e89b-12d3-a456-426614174000` |
+
+
+| Method | Purpose                   | Example             |
+| ------ | ------------------------- | ------------------- |
+| GET    | Retrieve data             | View products       |
+| POST   | Create data               | Register user       |
+| PUT    | Replace complete resource | Update full profile |
+| PATCH  | Update specific fields    | Change password     |
+| DELETE | Delete resource           | Delete account      |
+
+from flask import request
+
+@app.route("/search")
+def search():
+    name = request.args.get("name")
+    city = request.args.get("city")
+    return f"{name} from {city}"
+
+@app.route("/login", methods=["POST"])
+def login():
+    username = request.form["username"]
+    return username
+
+@app.route("/user", methods=["POST"])
+def user():
+    data = request.json
+    return data["name"]'
+
+@app.route("/upload", methods=["POST"])
+def upload():
+    file = request.files["image"]
+    file.save(file.filename)
+    return "Uploaded"
+Interview Questions
+1. What are HTTP methods?
+
+HTTP methods define the action a client wants to perform on a resource, such as retrieving, creating, updating, or deleting data.
+
+2. What is the difference between GET and POST?
+GET retrieves data and typically sends parameters in the URL.
+POST sends data in the request body to create or submit resources.
+3. What is the request object?
+
+The request object contains all information sent by the client, including query parameters, form data, JSON payloads, uploaded files,
+ headers, and cookies.
+
+4. When do you use request.args, request.form, request.json, and request.files?
+request.args → Query parameters from the URL.
+request.form → HTML form submissions.
+request.json → JSON data from API clients.
+request.files → Uploaded files.
+5. Why use jsonify() instead of returning a dictionary directly?
+
+A strong interview answer is:
+
+"jsonify() converts Python objects into a proper JSON response and sets the Content-Type header to application/json. Although modern
+ Flask versions automatically serialize dictionaries to JSON, jsonify() is still considered a best practice because it makes the response
+ type explicit, improves readability, and provides consistent behavior across different Flask versions."
+
+Q: Is @app.errorhandler(404) mandatory?
+
+Answer:
+No. Flask automatically returns a 404 error if a route doesn't exist. @app.errorhandler(404) is optional and is mainly used to customize 
+the error response, such as returning JSON instead of the default HTML page.
+
+_______________________________________________________________________________________________________________________________________
+**************Database Integration*****************
+
+Flask itself not having database to store data.instead of these it stores data to connects to databases using libraries.
+
+Examples:
+
+MongoDB → PyMongo
+PostgreSQL → psycopg2 or SQLAlchemy
+MySQL → mysql-connector or SQLAlchemy
+_________________________________________________________________
+from pymongo import MongoClient
+
+client = MongoClient("mongodb://localhost:27017/")
+db = client["college"]
+
+students = db["students"]
+
+students.insert_one({
+    "name":"John",
+    "age":20
+})
+________________________________________________________________
+import psycopg2
+
+conn = psycopg2.connect(
+    database="college",
+    user="postgres",
+    password="1234",
+    host="localhost",
+    port="5432"
+)
+
+cursor = conn.cursor()
+
+How does Flask connect to a database?
+
+Answer
+
+Flask connects to databases using external libraries such as PyMongo for MongoDB, psycopg2 for PostgreSQL, or SQLAlchemy as an ORM.
+ The application establishes a connection, executes queries, and returns the results.
+_________________________________________________________________________________________________________________
+
+13. Blueprint ⭐⭐⭐⭐
+
+Large Flask projects become difficult if every route is in one file.
+Blueprints organize related routes into separate modules, making the application modular, reusable, and easier to maintain as it grows.
+____________________________________________________________________________________________________________________
+What is JWT?
+Answer
+JWT is a signed token that contains user information or claims. After a successful login, the server issues the token, and the client 
+includes it in subsequent requests for authentication.
+____________________________________________________________________________________________________________________
+Why use JWT?
+Answer:
+JWT enables stateless authentication, making it suitable for REST APIs and distributed systems because the server does not need to store
+session data.
+_____________________________________________________________________________________________________________________
+Q: What is the format of a JWT?
+Answer:
+A JWT consists of three parts separated by dots: Header.Payload.Signature. The header specifies the token type and signing algorithm, the 
+payload contains user claims such as user ID or role, and the signature verifies the token's integrity and authenticity.
+_______________________________________________________________________________________________________________________
+Why use environment variables?
+Answer
+Environment variables store configuration values such as database credentials and secret keys securely, avoiding hardcoded sensitive 
+information in the codebase.
+________________________________________________________________________________________________________________________

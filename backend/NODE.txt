@@ -1,0 +1,20 @@
+NODE JS: https://chatgpt.com/c/6a9ab26a-b3fc-83e8-8ce2-21fc95ec5886
+
+WHY WE EXPRESS INSTEAD OF HTTP MODULE:
+-----------------------------------------------
+The HTTP module provides low-level functionality for creating HTTP servers, but Express provides 
+higher-level features such as routing, middleware, request/response handling, JSON parsing, and 
+error handling. Therefore, Express makes developing and maintaining web applications and REST 
+APIs much easier.
+
+HTTP module
+→ Low-level
+→ More manual code
+
+Express
+→ Higher-level
+→ Routing
+→ Middleware
+→ Easier APIs
+→ Cleaner code
+______________________________________________________________________________________________

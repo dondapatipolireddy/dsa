@@ -1,0 +1,345 @@
+LINUX CONCEPTS: https://chatgpt.com/c/6a16eeb0-12c0-83a6-a89d-426b98848931
+KERNEL:
+	A kernel is the core component of an operating system. It acts as a bridge between the hardware and user applications. It manages 
+system resources such as CPU, memory, devices, files, and processes, ensuring that programs can safely and efficiently use the hardware."
+
+Linux file listing (ls -l)
+
+Format example:
+
+-rwxrwxrwx 1 root root 425 Apr 20 19:33 f1.py
+Meaning of fields:
+root (1st) → owner of file
+root (2nd) → group of file
+1 → number of hard links0
+00000.
+425 → file size in bytes
+f1.py → filename
+📌 Permissions (r, w, x)
+r → read (4)
+w → write (2)
+x → execute (1)
+
+Examples:
+
+rwx = 7
+rw- = 6
+r-x = 5
+📌 Changing permissions
+Command: chmod
+Examples:
+chmod 754 f1.py
+chmod +x f1.py
+chmod g-w f1.py
+📌 umask meaning
+umask = User file creation mode mask
+It controls default permissions of new files/folders
+It removes permissions from base values:
+Files start at 666
+Directories start at 777
+
+Example:
+
+umask 022
+files → 644
+directories → 755
+📌 Changing umask
+
+Temporary:
+
+umask 022
+
+Check:
+
+umask
+Permanent:
+Edit ~/.bashrc
+Add umask 022
+
+Apply:
+
+source ~/.bashrc
+📌 .bashrc meaning
+.bashrc = Bash Run Commands file
+
+A hidden file in home directory:
+
+~/.bashrc
+Runs automatically when a new terminal opens
+Used for:
+aliases
+environment variables
+umask settings
+customizing terminal
+📌 Editing files
+nano is a text editor
+nano ~/.bashrc → edit bash configuration file
+Important:
+.bashrc is a file, not a command
+so you cannot run .bashrc directly
+
+If you want, I can also convert this into short revision notes or exam cheat sheet.
+-----------------------------------------
+
+Interview Answer
+
+Where can umask be changed?
+
+Current shell: umask 027
+User level: ~/.bashrc, ~/.profile
+System level: /etc/profile, /etc/bashrc
+Login defaults: /etc/login.defs
+
+
+after edit using vim or nano
+c>vim or nano ~/.bashrc
+c> source ~/.bashrc
+
+
+---------------------------------------------
+
+chown syntax:
+	file:chown owner filename
+	dir: chown -R john project/
+chgrp syntax:
+	file:chgrp owner filename
+	dir:chgrp -R developers project/
+combined:
+	chown owner:group filename
+___________________________________________________________________________________________________________________________________________
+Is / mandatory?
+
+No.
+
+What does the / at the end of project/ mean?
+
+It indicates that project is a directory. In most Linux commands, project and project/ behave the same, but the trailing slash makes it 
+explicit that the target is a folder.
+
+R means:
+___________________
+What is Recursive?
+
+It means the command is applied to:
+
+The directory itself
+All files inside it
+All subdirectories inside it
+All files inside those subdirectories
+_____________________________________________________________________________________________________________________________________
+INODE STTRUCTURE:
+
+Directory
+   |
+   +---- report.txt
+            |
+            v
+        Inode 12345
+            |
+            +--> Permissions
+            +--> Owner
+            +--> Group
+            +--> Size
+            +--> Timestamps
+            +--> Disk Block Addresses
+__________________________________________________________________________________________________________________________________
+How many inode numbers are provided in a partition?
+
+The number of inodes is determined when the filesystem is created. In ext4, Linux allocates a fixed inode table based on the partition
+ size (typically about 1 inode per 16 KB). You can check the total inode count using df -i or tune2fs -l. In your /dev/sda2 partition, the
+ total inode count is 1,310,720.
+_____________________________________________________________________________________________________________________________________
+What is an inode?
+
+An inode is a data structure in Linux that stores metadata about a file such as permissions, owner, size, timestamps, and disk block 
+locations. Each file is identified by an inode number. The filename itself is not stored in the inode.
+_____________________________________________________________________________________________________________
+What Does an Inode Store?
+
+✅ File size
+
+✅ Owner ID
+
+✅ Group ID
+
+✅ Permissions
+
+✅ Timestamps
+| Timestamp | Meaning                   |
+| --------- | ------------------------- |
+| atime     | Last access time          |
+| mtime     | Last modification time    |
+| ctime     | Last metadata change time |
+
+
+✅ Disk block locations
+
+❌ File name (the filename is stored separately in the directory)
+__________________________________________________________________________________________________________________________
+Why do hard links have the same inode?
+Because both filenames point to the same inode and therefore the same underlying file data.
+_____________________________________________________________________________________________________________________________
+What happens when a file is deleted?
+Linux removes the filename-to-inode mapping. The inode and data remain until the link count becomes zero and no process is using the file.
+___________________________________________________________________________________________________________________________
+interview
+Q. A filesystem can run out of inodes even when disk space exists.
+Example:
+
+Disk Space Available = 50 GB
+Free Inodes = 0
+
+You cannot create new files.
+Reason:
+Each file requires an inode.
+
+Example:
+
+Disk Space Available = 50 GB
+Free Inodes = 0
+
+You cannot create new files.
+
+Reason:
+
+Each file requires an inode.
+
+______________________________________________________________
+_______________Check Inode Usage:__________________
+Show inode usage
+c=> df -i
+
+Example:
+Filesystem Inodes IUsed IFree IUse%
+/dev/sda1 100000 90000 10000 90%
+___________________________________________________________
+COMMAND:Get commplete information of the node
+C=> stat filename
+OUTPUT:
+Inode: 12345
+Size: 100
+Access: rw-r--r--
+
+
+Why Are Inodes Important?
+
+Linux identifies files by inode number, not by filename.
+Two files with the same inode number are actually the same file (hard links).
+COMMAND:
+C=>ls -i filename
+
+________________________________________________________________
+Hard Link and Inode :ln file1.txt file2.txt
+Soft Link and Inode :ln -s file1.txt link1
+________________________________________________________________
+
+PROCESS MANAGEMENT:
+
+Process Management is the operating system's mechanism for managing running programs (processes). It involves creating, scheduling, 
+monitoring, controlling, and terminating processes while efficiently allocating CPU, memory, and other system resources.
+
+| State      | Meaning                                     |
+| ---------- | ------------------------------------------- |
+| New        | Process created                             |
+| Running    | Executing                                   |
+| Ready      | Waiting for CPU                             |
+| Waiting    | Waiting for I/O                             |
+| Stopped    | Paused                                      |
+| Zombie     | Finished but parent hasn't collected status |
+| Terminated | Completely ended                            |
+
+
+Process Hierarchy: Linux processes form a tree
+
+init (PID 1)
+    |
+    |------systemd
+            |
+            |------sshd
+            |        |
+            |        -----bash
+            |              |
+            |             python
+            |
+            |------apache
+            |
+            |------mysql
+
+
+| Key | Function       |
+| --- | -------------- |
+| q   | Quit           |
+| k   | Kill process   |
+| P   | Sort by CPU    |
+| M   | Sort by Memory |
+| h   | Help           |
+
+
+
+COMMANDS:4
+1.ps  : show process but lessdata ONlY(PID,TTY,BASH)
+2.ps -e : it shows all processs
+***IMPORANT*******
+3.ps -ef : shows all process with complete details
+      1. ps → Process Status (displays information about running processes)
+      2. -e → Shows every process running on the system.
+      3. -f → Displays the full-format listing, including detailed information about each process.
+***IMPORTANT******
+________________________________________________________________________
+    UID   PID  PPID  C STIME TTY      TIME     CMD
+    root    1     0  0 09:00 ?        00:00:02 systemd
+    user 2456     1  0 10:15 pts/0    00:00:01 python app.py
+    user 3201  2456  1 10:20 pts/0    00:00:05 chrome
+____________________________________________________________________________________
+4.ps aux : It's shows complete details of the process
+_________________________________________________________________________________________________________________________________________
+
+top: 
+   The top command is a real-time process monitoring tool. It continuously displays running processes along with CPU usage, memory usage,
+process priority, and system load, making it useful for performance monitoring.
+
+htop:
+**NOTES** : IT REQUIRES NEW PACKAGE
+
+   htop is an interactive and improved version of the top command. It provides a colorful user interface, mouse support, and allows users
+to search, sort, and manage processes more easily.
+
+| top               | htop              |
+| ----------------- | ----------------- |
+| Default tool      | Extra package     |
+| Text interface    | Interactive UI    |
+| Harder navigation | Easier navigation |
+
+
+7. What is the kill command?
+
+Interview Answer:
+	The kill command is used to terminate a running process using its Process ID (PID). By default, it sends the SIGTERM (signal 15),
+allowing the process to exit gracefully.
+
+What is killall?
+
+Interview Answer:
+	The killall command terminates all processes that match a given process name. Unlike kill, which requires a PID, killall works directly 
+with the process name.
+
+
+| Command   | Purpose                               | Placement Importance |
+| --------- | ------------------------------------- | -------------------- |
+| `ps`      | Display running processes             | ⭐⭐⭐⭐⭐               |
+| `top`     | Live process monitoring               | ⭐⭐⭐⭐⭐               |
+| `htop`    | Interactive process monitor           | ⭐⭐⭐⭐                |
+| `kill`    | Kill a process using PID              | ⭐⭐⭐⭐⭐               |
+| `killall` | Kill processes by name                | ⭐⭐⭐⭐                |
+| `pgrep`   | Find PID by process name              | ⭐⭐⭐⭐                |
+| `pkill`   | Kill process by name or pattern       | ⭐⭐⭐⭐                |
+| `jobs`    | Show background jobs in current shell | ⭐⭐⭐                 |
+| `bg`      | Resume a stopped job in background    | ⭐⭐⭐                 |
+| `fg`      | Bring a background job to foreground  | ⭐⭐⭐⭐                |
+| `nohup`   | Run a process even after logout       | ⭐⭐⭐⭐                |
+| `nice`    | Start a process with a priority       | ⭐⭐⭐                 |
+| `renice`  | Change priority of a running process  | ⭐⭐⭐                 |
+| `pidof`   | Display PID of a process              | ⭐⭐⭐                 |
+| `pstree`  | Show process hierarchy as a tree      | ⭐⭐⭐                 |
+____________________________________________________________________________________________________________________________________
+
